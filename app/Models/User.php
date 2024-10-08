@@ -51,4 +51,9 @@ class User extends Authenticatable
     public function image() {
         return $this->morphOne(Image::class, 'parentable');
     }
+
+    public function integration()
+    {
+        return $this->hasOne(integration::class);
+    }
 }

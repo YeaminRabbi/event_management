@@ -78,7 +78,6 @@ class RolePermissionController extends Controller implements HasMiddleware
 
     public function permission_delete($id)
     {
-        // return
         $permission = Permission::findById($id);
         $permission->delete();
         return back()->with('success', 'Successfully Permission has been deleted!');
