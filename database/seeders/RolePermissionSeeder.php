@@ -17,14 +17,10 @@ class RolePermissionSeeder extends Seeder
         // Define roles
         $roles = [
             'admin' => [
-                // Dashboard and general permissions
                 'view-dashboard',
-
-                //user module
                 'user-module',
-
-                //role permission
                 'role-permission-module',
+                'integration-module'
             ],
             'user' => [
                 // Dashboard and general permissions
