@@ -45,7 +45,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
 
     Route::resource('users', UserController::class);
     Route::resource('integration', IntegrationController::class);
-    Route::resource('calendar', CalendarController::class);
+    Route::resource('event', EventController::class);
 
 
     

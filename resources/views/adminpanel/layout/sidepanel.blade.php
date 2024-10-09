@@ -73,8 +73,8 @@
             </li>
         @endcan
 
-        <li class="menu-item {{ Request::routeIs('calendar.*') ? 'active' : '' }}">
-            <a href="{{ route('calendar.index') }}" class="menu-link">
+        <li class="menu-item {{ Request::routeIs('event.*') ? 'active' : '' }}">
+            <a href="{{ route('event.index') }}" class="menu-link">
                 <i class="menu-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
@@ -83,7 +83,7 @@
                     </svg>
 
                 </i>
-                <div data-i18n="Analytics">Calendar</div>
+                <div data-i18n="Analytics">Event</div>
             </a>
         </li>
 

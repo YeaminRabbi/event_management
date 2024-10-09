@@ -79,9 +79,6 @@
                             </div>
                         </div>  
 
-
-                        
-
                         <div class="row justify-content-end">
                             <div class="col-sm-10">
                                 <button type="submit" class="btn btn-primary btn-sm">Submit</button>
@@ -100,7 +97,7 @@
 
 @endsection
 
-@section('footer_js')
+@section('js')
 <script src="https://cdn.ckeditor.com/ckeditor5/35.2.1/classic/ckeditor.js"></script>
 <script>
     ClassicEditor
