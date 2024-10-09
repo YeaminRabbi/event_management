@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('google_event_id')->unique()->nullable(); // Unique ID from Google Calendar
+            $table->string('google_event_url')->nullable(); 
+            $table->foreignId('user_id')
+                ->constrained('users')  // Reference the 'users' table
+                ->onDelete('cascade');  // Cascade on delete
             $table->string('summary'); // Event title
             $table->text('description')->nullable(); // Event description
             $table->string('location')->nullable(); // Event location
@@ -22,7 +26,7 @@ return new class extends Migration
             $table->json('attendees')->nullable(); // JSON column for attendees
             $table->json('reminders')->nullable(); // JSON column for reminders
             $table->string('status'); // Event status
-            $table->tinyInteger('active')->dafault(0);
+            $table->tinyInteger('approve')->dafault(false); // Event admin approval
             $table->timestamps();
         });
     }

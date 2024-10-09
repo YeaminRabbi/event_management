@@ -11,6 +11,7 @@ class Event extends Model
 
     protected $fillable = [
         'google_event_id',
+        'google_event_url',
         'summary',
         'description',
         'location',
@@ -19,7 +20,8 @@ class Event extends Model
         'attendees',
         'reminders',
         'status',
-        'active'
+        'approve',
+        'user_id',
     ];
 
     protected $casts = [

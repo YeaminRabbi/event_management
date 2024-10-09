@@ -12,28 +12,18 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Google\Service\Calendar as Calendar;
+use Google\Service\Calendar\Event as GoogleEvent;
 
 class EventController extends Controller
 {
     public function index()
     {
         $user = Auth::user();
-        // checking if the user has connected trough google calendar
-        // if ($user->integration()->exists()) {
-        //     $service = new GoogleClientService();
-        //     // return $service->getCredentials();
-        //     // return $service->initializeGoogleClient();
-
-        //     return [
-        //         // $service->getCredentials(),
-        //         // $service->initializeGoogleClient(),
-        //         $service->getCalendarData(),
-        //     ];
-        // }
-
-        // return 'no integration'; 
-
         $events = Event::latest()->get();
+
+        // $service = new GoogleClientService();
+        // return $service->getCalendarData();
 
         return view('adminpanel.event.index', compact('events'));
     }
@@ -62,14 +52,14 @@ class EventController extends Controller
         try {
             // Create new event record
             $event = Event::create([
-                // 'google_event_id' => Str::uuid(), // Generate a unique Google event ID (you can modify this as per your requirements)
+                'user_id' => Auth::id(),
                 'summary' => $request->input('summary'),
                 'location' => $request->input('location'),
                 'start' => $request->input('start'),
                 'end' => $request->input('end'),
                 'description' => $request->input('description'),
                 'status' => $request->input('status'),
-                'active' => 0, // Set active to 1 (or modify according to your requirements)
+                'approve' => 0, // Set active to 1 (or modify according to your requirements)
             ]);
 
 
@@ -79,57 +69,66 @@ class EventController extends Controller
                 $service->store($request, $event);
             }
 
+
+            // Prepare event data for Google Calendar
+            $user = Auth::user();
+
+            if ($user->integration()->exists()) {
+
+                $eventStartTime = \Carbon\Carbon::parse($request->input('start'))->toIso8601String();
+                $eventEndTime = \Carbon\Carbon::parse($request->input('end'))->toIso8601String();
+
+                // Create a new Google Calendar event object
+                $googleEvent = new GoogleEvent(array(
+                    'summary' => $event->summary, // Use summary from the event model
+                    'description' => $event->description,
+                    'location' => $event->location,
+                    'start' => array(
+                        'dateTime' => $eventStartTime,
+                        'timeZone' => 'Asia/Dhaka',
+                    ),
+                    'end' => array(
+                        'dateTime' => $eventEndTime,
+                        'timeZone' => 'Asia/Dhaka',
+                    ),
+                    'reminders' => array(
+                        'useDefault' => false,
+                        'overrides' => array(
+                            'method' => 'popup', 
+                            'minutes' => 60,
+                        ),
+                    ),
+                ));
+
+                $googleClientService = new GoogleClientService();
+
+                $client = $googleClientService->client;
+                $googleCalendarService = new Calendar($client);
+
+                // Insert the event into Google Calendar
+                $googleCalendarEvent = $googleCalendarService->events->insert('primary', $googleEvent);
+
+                if($googleCalendarEvent){
+                    $event->update([
+                        'google_event_id' =>   $googleCalendarEvent->id,
+                        'google_event_url' =>   $googleCalendarEvent->htmlLink
+                    ]);
+                }
+            }
+
             // Commit the transaction
             DB::commit();
 
-
-
-              // Prepare event data for Google Calendar
-            // $eventStartTime = $request->date . 'T' . $request->time . ':00'; // Assuming time is in HH:MM format
-            // $eventEndTime = $request->date . 'T' . date('H:i:s', strtotime($request->time) + 3600); // Add one hour
-
-            // $googleEvent = [
-            //     'summary' => $event->name,
-            //     'description' => $event->description,
-            //     'start' => [
-            //         'dateTime' => $eventStartTime,
-            //         'timeZone' => 'Asia/Dhaka',
-            //     ],
-            //     'end' => [
-            //         'dateTime' => $eventEndTime,
-            //         'timeZone' => 'Asia/Dhaka',
-            //     ],
-            //     'reminders' => [
-            //         'useDefault' => false,
-            //         'overrides' => [
-            //             ['method' => 'popup', 'minutes' => 10],
-            //         ],
-            //     ],
-            // ];
-
-            // // Sync with Google Calendar
-            // try {
-            //     $googleCalendarService = new Google_Service_Calendar($this->googleClientService->client);
-            //     $googleCalendarEvent = $googleCalendarService->events->insert('primary', $googleEvent);
-
-            //     // Save Google Calendar data to the event
-            //     $event->update([
-            //         'google_calendar_data' => json_encode($googleCalendarEvent),
-            //     ]);
-            // } catch (\Exception $e) {
-            //     return back()->withErrors(['google_calendar' => 'Failed to sync with Google Calendar: ' . $e->getMessage()]);
-            // }
-
-
             // Flash success message to session
             return back()->with('success', 'Event created successfully.');
+            
         } catch (\Exception $e) {
 
             // Rollback transaction if something goes wrong
             DB::rollBack();
 
             // Log the exception details
-            Log::error('SQL failed: ' . $e->getMessage(), [
+            Log::error('Event create failed: ' . $e->getMessage(), [
                 'exception' => $e,
             ]);
 
@@ -137,12 +136,14 @@ class EventController extends Controller
         }
     }
 
-    public function edit(Event $event){
+    public function edit(Event $event)
+    {
         return view('adminpanel.event.edit', compact('event'));
     }
 
 
-    public function update(Request $request, Event $event){
+    public function update(Request $request, Event $event)
+    {
         $request->validate([
             'summary' => 'required|string|max:255',
             'location' => 'nullable|string|max:255',
@@ -153,7 +154,7 @@ class EventController extends Controller
             'file' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // Validate image upload
         ]);
 
-         // Begin a transaction to ensure all or nothing happens
+        // Begin a transaction to ensure all or nothing happens
         DB::beginTransaction();
         try {
             // Create new event record
@@ -180,8 +181,6 @@ class EventController extends Controller
 
             // Flash success message to session
             return back()->with('success', 'Event updated successfully.');
-
-
         } catch (\Exception $e) {
 
             // Rollback transaction if something goes wrong
@@ -196,7 +195,8 @@ class EventController extends Controller
         }
     }
 
-    public function destroy(Request $request, Event $event){
+    public function destroy(Request $request, Event $event)
+    {
         $event->delete();
         return back()->with('warning', 'Event removed successfully');
     }

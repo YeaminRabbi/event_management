@@ -38,7 +38,7 @@
                                         style="color: red;">*</span></label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="event-summary"
-                                        placeholder="Enter Event Name" name="summary" value="{{ old('summary', $event->summary) }}" required />
+                                        placeholder="Enter Event Summary" name="summary"  value="{{ old('summary', $event->summary) }}" required />
                                 </div>
                             </div>
 
@@ -65,15 +65,6 @@
                                 <div class="col-sm-10">
                                     <input type="datetime-local" class="form-control" id="event-end" name="end"
                                         value="{{ old('end', \Carbon\Carbon::parse($event->end)->format('Y-m-d\TH:i')) }}" required />
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="event-summary">Summary <span
-                                        style="color: red;">*</span></label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" id="event-summary" placeholder="Enter Event Summary" name="summary" rows="3"
-                                        required>{{ old('summary', $event->summary) }}</textarea>
                                 </div>
                             </div>
 

@@ -52,12 +52,6 @@ class GoogleClientService
                 $credentials->credentials = $client->getAccessToken();
                 $credentials->save(); // Save updated credentials
 
-                // return [
-                //     'yes token is expired',
-                //     'my refresh token' =>$refreshToken,
-                //     'updated credentials' => $credentials,
-                //     'new accesstoken from google' => $client->getAccessToken()
-                // ];
             } else {
                 throw new \Exception('Access token is expired and no refresh token available.');
             }
@@ -69,7 +63,7 @@ class GoogleClientService
 
     public function getCalendarData($calendarId = 'primary', $timeMin = null, $timeMax = null)
     {
-        $service = new Google_Service_Calendar($this->client);
+        $service = new \Google_Service_Calendar($this->client);
 
         $optParams = [
             'orderBy' => 'startTime',

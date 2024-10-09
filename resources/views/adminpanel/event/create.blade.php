@@ -68,15 +68,6 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="event-summary">Summary <span
-                                        style="color: red;">*</span></label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" id="event-summary" placeholder="Enter Event Summary" name="summary" rows="3"
-                                        required></textarea>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="event-description">Description</label>
                                 <div class="col-sm-10">
                                     <textarea class="form-control" id="event-description" placeholder="Enter Event Description" name="description"

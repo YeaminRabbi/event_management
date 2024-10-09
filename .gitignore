@@ -20,3 +20,4 @@ yarn-error.log
 /.zed
 /template
 /features
+/storage/*.key
