@@ -122,6 +122,7 @@ class EventController extends Controller
             // Flash success message to session
             return back()->with('success', 'Event created successfully.');
             
+            
         } catch (\Exception $e) {
 
             // Rollback transaction if something goes wrong
