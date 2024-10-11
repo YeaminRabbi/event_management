@@ -97,7 +97,6 @@
                                     <select class="form-control" id="event-status" name="status">
                                         <option value="" disabled selected>--select one--</option>
                                         <option value="confirmed">Confirmed</option>
-                                        <option value="tentative">Tentative</option>
                                         <option value="cancelled">Cancelled</option>
                                     </select>
                                 </div>
