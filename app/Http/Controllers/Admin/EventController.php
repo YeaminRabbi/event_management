@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Google\Service\Calendar as Calendar;
 use Google\Service\Calendar\Event as GoogleEvent;
+use Carbon\Carbon;
+use DateTime;
 
 class EventController extends Controller
 {
@@ -95,7 +97,7 @@ class EventController extends Controller
                     'reminders' => array(
                         'useDefault' => false,
                         'overrides' => array(
-                            'method' => 'popup', 
+                            'method' => 'popup',
                             'minutes' => 60,
                         ),
                     ),
@@ -109,7 +111,7 @@ class EventController extends Controller
                 // Insert the event into Google Calendar
                 $googleCalendarEvent = $googleCalendarService->events->insert('primary', $googleEvent);
 
-                if($googleCalendarEvent){
+                if ($googleCalendarEvent) {
                     $event->update([
                         'google_event_id' =>   $googleCalendarEvent->id,
                         'google_event_url' =>   $googleCalendarEvent->htmlLink
@@ -122,8 +124,6 @@ class EventController extends Controller
 
             // Flash success message to session
             return back()->with('success', 'Event created successfully.');
-            
-            
         } catch (\Exception $e) {
 
             // Rollback transaction if something goes wrong
@@ -177,6 +177,38 @@ class EventController extends Controller
                 $service->update($request, $event);
             }
 
+            // Prepare event data for Google Calendar
+            $user = Auth::user();
+
+            if ($user->integration()->exists()) {
+                $googleClientService = new GoogleClientService();
+                $client = $googleClientService->client;
+                $googleCalendarService = new Calendar($client);
+
+                // Retrieve the Google Calendar event
+                $googleEvent = $googleCalendarService->events->get('primary', $event->google_event_id);
+
+                if ($googleEvent) {
+                     // Convert the start and end times to EventDateTime format
+                    $eventStartTime = new \Google\Service\Calendar\EventDateTime();
+                    $eventStartTime->setDateTime(\Carbon\Carbon::parse($event->start)->toIso8601String());
+
+                    $eventEndTime = new \Google\Service\Calendar\EventDateTime();
+                    $eventEndTime->setDateTime(\Carbon\Carbon::parse($event->end)->toIso8601String());
+
+                    // Update the Google Calendar event details
+                    $googleEvent->setStart($eventStartTime);
+                    $googleEvent->setEnd($eventEndTime);
+                    $googleEvent->setSummary($event->summary);
+                    $googleEvent->setLocation($event->location);
+                    $googleEvent->setStatus($event->status);
+
+                    // Update the event in Google Calendar
+                    $updatedEvent = $googleCalendarService->events->update('primary', $googleEvent->getId(), $googleEvent);
+                }
+               
+            }
+
             // Commit the transaction
             DB::commit();
 
@@ -199,7 +231,34 @@ class EventController extends Controller
 
     public function destroy(Request $request, Event $event)
     {
-        $event->delete();
-        return back()->with('warning', 'Event removed successfully');
+       
+        try {
+            $user = Auth::user();
+
+            if ($user->integration()->exists()) {
+                $googleClientService = new GoogleClientService();
+                $client = $googleClientService->client;
+                $googleCalendarService = new Calendar($client);
+
+                // Retrieve the Google Calendar event and delete
+                $googleEvent = $googleCalendarService->events->get('primary', $event->google_event_id);
+
+                if($googleEvent && $googleEvent->status != 'cancelled'){
+                    $googleCalendarService->events->delete('primary', $event->google_event_id);
+                }
+            }
+
+            $event->delete();
+            return back()->with('warning', 'Event removed successfully');
+
+        } catch (\Exception $e) {
+
+            // Log the exception details
+            Log::error('SQL failed: ' . $e->getMessage(), [
+                'exception' => $e,
+            ]);
+
+            return redirect()->back()->withErrors('An error occurred while removing. Please try again.');
+        }
     }
 }

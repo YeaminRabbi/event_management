@@ -83,7 +83,6 @@
                                     <select class="form-control" id="event-status" name="status">
                                         <option value="" selected disabled>--select status--</option>
                                         <option value="confirmed" {{ old('status', $event->status) == 'confirmed' ? 'selected' : '' }}>Confirmed</option>
-                                        <option value="tentative" {{ old('status', $event->status) == 'tentative' ? 'selected' : '' }}>Tentative</option>
                                         <option value="cancelled" {{ old('status', $event->status) == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                                     </select>
                                 </div>
