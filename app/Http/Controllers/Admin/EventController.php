@@ -23,6 +23,7 @@ class EventController extends Controller
         $events = Event::latest()->get();
 
         // $service = new GoogleClientService();
+        // return $service->initializeGoogleClient();
         // return $service->getCalendarData();
 
         return view('adminpanel.event.index', compact('events'));

@@ -36,12 +36,15 @@ class GoogleClientService
         }
 
         $client = new Google_Client();
+        $client->setAuthConfig(storage_path('app/google/credentials.json'));
         $client->setApplicationName('Event Management'); // Set your application name
         $client->setScopes(\Google_Service_Calendar::CALENDAR);
         $client->setAccessToken($credentials->credentials);
 
         // Check if the access token is expired
         if ($client->isAccessTokenExpired()) {
+
+            // return 1;
             // Refresh the token if possible
             $refreshToken = $credentials->credentials['refresh_token'];
             
@@ -57,7 +60,6 @@ class GoogleClientService
             }
         }
 
-        // return 1;
         return $client;
     }
 
