@@ -247,6 +247,7 @@ class EventController extends Controller
                     $googleCalendarService->events->delete('primary', $event->google_event_id);
                 }
             }
+            
 
             $event->delete();
             return back()->with('warning', 'Event removed successfully');
