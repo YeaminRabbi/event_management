@@ -22,10 +22,15 @@ class Event extends Model
         'status',
         'approve',
         'user_id',
+        'ticket_price'
     ];
 
     protected $casts = [
         'attendees' => 'array', // Cast JSON to array
         'reminders' => 'array', // Cast JSON to array
     ];
+
+    public function tickets(){
+        return $this->hasMany(Event::class);
+    }
 }

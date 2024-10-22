@@ -16,6 +16,9 @@ Route::get('/', function () {
 Route::get('google/oauth/redirect', [GoogleCalendarController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('google/oauth/callback', [GoogleCalendarController::class, 'handleGoogleCallback'])->name('google.callback');
 
+// Event Details information
+Route::get('event-details/{event}', [EventController::class, 'getEventDetails']);
+
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
 
@@ -45,9 +48,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
 
     Route::resource('users', UserController::class);
     Route::resource('integration', IntegrationController::class);
+    Route::resource('ticket', TicketController::class);
+
+    //Event Routes
     Route::resource('event', EventController::class);
-
-
     
     
 });
+
+

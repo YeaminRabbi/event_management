@@ -24,10 +24,6 @@ class EventController extends Controller
         $user = Auth::user();
         $events = Event::latest()->get();
 
-        // $service = new GoogleClientService();
-        // return $service->initializeGoogleClient();
-        // return $service->getCalendarData();
-
         return view('adminpanel.event.index', compact('events'));
     }
 
@@ -47,6 +43,7 @@ class EventController extends Controller
             'description' => 'nullable|string',
             'status' => 'required|string|in:confirmed,tentative,cancelled', // Validate status
             'file' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // Validate image upload
+            'ticket_price' => 'required'
         ]);
 
 
@@ -60,6 +57,7 @@ class EventController extends Controller
                 'location' => $request->input('location'),
                 'start' => $request->input('start'),
                 'end' => $request->input('end'),
+                'ticket_price' => $request->input('ticket_price'),
                 'description' => $request->input('description'),
                 'status' => $request->input('status'),
                 'approve' => 0, // Set active to 1 (or modify according to your requirements)
@@ -154,6 +152,7 @@ class EventController extends Controller
             'description' => 'nullable|string',
             'status' => 'required|string|in:confirmed,tentative,cancelled', // Validate status
             'file' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // Validate image upload
+            'ticket_price' => 'required'
         ]);
 
         // Begin a transaction to ensure all or nothing happens
@@ -168,6 +167,7 @@ class EventController extends Controller
                 'end' => $request->input('end'),
                 'description' => $request->input('description'),
                 'status' => $request->input('status'),
+                'ticket_price' => $request->input('ticket_price'),
             ]);
 
 
@@ -233,6 +233,7 @@ class EventController extends Controller
     {
        
         try {
+
             $user = Auth::user();
 
             if ($user->integration()->exists()) {
@@ -260,5 +261,15 @@ class EventController extends Controller
 
             return redirect()->back()->withErrors('An error occurred while removing. Please try again.');
         }
+    }
+
+    public function getEventDetails(Event $event){
+        return response()->json([
+            'price' => $event->ticket_price,
+            'location' => $event->location,
+            'description' => $event->description,
+            'start' => $event->start,
+            'end' => $event->end,
+        ]);
     }
 }

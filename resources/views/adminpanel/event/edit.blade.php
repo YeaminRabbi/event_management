@@ -69,6 +69,13 @@
                             </div>
 
                             <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="ticket-price">Ticket Price <span style="color: red;">*</span></label>
+                                <div class="col-sm-10">
+                                    <input type="number" step="0.01" min="0" class="form-control" id="ticket-price" name="ticket_price" placeholder="Enter Ticket Price" required value="{{ old('ticket_price', $event->ticket_price)}}" pattern="^\d+(\.\d{1,2})?$" title="Please enter a valid price with up to 2 decimal places" />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="event-description">Description</label>
                                 <div class="col-sm-10">
                                     <textarea class="form-control" id="event-description" placeholder="Enter Event Description" name="description"
