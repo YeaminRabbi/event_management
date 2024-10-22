@@ -65,7 +65,7 @@
                                     <option selected disabled>--select role--</option>
                                     @if ($roles->isNotEmpty())
                                         @foreach ($roles as $data)
-                                            <option value="{{ $data->id }}">{{$data->name}}</option>                                        
+                                            <option value="{{ $data->name }}">{{$data->name}}</option>                                        
                                         @endforeach
                                     @endif
                                 </select>
