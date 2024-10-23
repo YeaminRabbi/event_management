@@ -42,51 +42,36 @@
                         <tr>
                             <th>SL</th>
                             <th>Event</th>
-                            <th>Status</th>
-                            <th>Time & Date (Start/End)</th>
-                            <th>Ticket Price</th>
-                            <th>Approval</th>
-                            <th>Actions</th>
+                            <th>Participant Info</th>
+                            <th>Ticket Info</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        {{-- @if ($events->isNotEmpty())
-                            @foreach ($events as $key => $event)
+                        @if ($tickets->isNotEmpty())
+                            @foreach ($tickets as $key => $ticket)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $event->summary }}</td>
+                                    <td>{{ $ticket->event->summary }}</td>
+                                    <td>{{ $ticket->ticket_count() }}</td>
                                     <td>
-                                        @switch($event->status)
-                                            @case('confirmed')
-                                                <span class="badge bg-success">Confirmed</span>
-                                                @break
-                                            @case('tentative')
-                                                <span class="badge bg-warning text-dark">Tentative</span>
-                                                @break
-                                            @case('cancelled')
-                                                <span class="badge bg-danger">Cancelled</span>
-                                                @break
-                                            @default
-                                                <span class="badge bg-secondary">Unknown</span>
-                                        @endswitch
+                                        <span class="fw-bold">Name: </span> {{$ticket->purchase_name}} <br>
+                                        <span class="fw-bold">Email: </span> {{$ticket->purchase_email}} <br>
+                                        <span class="fw-bold">Phone: </span> {{$ticket->purchase_phone}} <br>
                                     </td>
                                     <td>
-                                        <span class="bg-label-primary p-2 me-1">{{ \Carbon\Carbon::parse($event->start)->format('h:ia \o\n d M, Y') }}</span> <br> <span>-</span></span> <br>
-                                        <span class="bg-label-primary p-2 me-1">{{ \Carbon\Carbon::parse($event->end)->format('h:ia \o\n d M, Y') }}</span>
-                                        
+                                        <span class="fw-bold">Ticket Sold: </span> {{$ticket->ticket_quantity}} <br>
+                                        <span class="fw-bold">Ticket Price: </span> {{$ticket->ticket_price}} <br>
+                                        <span class="fw-bold">Total Amount: </span> {{$ticket->total_amount}} <br>
+                                        <span class="fw-bold">Payment Status: </span> 
+                                        <span class="badge {{ $ticket->payment_status == 'paid' ? 'bg-success' : 'bg-danger' }}">
+                                            {{ ucfirst($ticket->payment_status) }}
+                                        </span>
+                                        <br>
+
                                     </td>
+                                    
 
-                                    <td> <span class="fw-bold">$</span> {{number_format($event->ticket_price , 2)}} </td>
-
-                                    <td>
-                                        @if ($event->approve == 0)
-                                            <span class="badge bg-label-warning">pending</span>
-                                        @elseif($event->approve == 1)
-                                            <span class="badge bg-label-success">approved</span>
-                                        @endif
-                                    </td>
-
-                                    <td>
+                                    {{-- <td>
                                         <a href="{{ route('event.edit', $event->id) }}" class="btn btn-primary btn-sm">
                                             <i class="fa fa-pencil"></i>
                                         </a>
@@ -101,14 +86,14 @@
                                             @csrf
                                             @method('DELETE')
                                         </form>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             @endforeach
                         @else
                             <tr>
                                 <td colspan="5" class="text-center">No purchased tickets found.</td>
                             </tr>
-                        @endif --}}
+                        @endif
                     </tbody>
                 </table>
             </div>

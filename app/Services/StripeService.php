@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Services;
 
@@ -9,3 +9,13 @@ use App\Notifications\Contact as ContactNotification;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+
+class StripeService
+{
+
+    
+
+
+    
+
+}

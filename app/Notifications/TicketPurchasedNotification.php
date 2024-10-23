@@ -29,27 +29,6 @@ class TicketPurchasedNotification extends Notification implements ShouldQueue
         return ['mail'];
     }
 
-    /**
-     * Get the mail representation of the notification.
-     */
-    // public function toMail($notifiable)
-    // {
-    //     // Generate the PDF for the ticket
-    //     $pdf = PDF::loadView('mail.ticket', ['ticket' => $this->ticket]);
-
-    //     return (new MailMessage)
-    //         ->subject('Ticket Purchase Confirmation')
-    //         ->greeting('Hello ' . $this->ticket->purchase_name . '!')
-    //         ->line('Thank you for purchasing tickets for the event: ' . $this->ticket->event->summary)
-    //         ->line('Ticket Quantity: ' . $this->ticket->ticket_quantity)
-    //         ->line('Total Amount: $' . $this->ticket->total_amount)
-    //         ->attachData($pdf->output(), 'ticket.pdf', [
-    //             'mime' => 'application/pdf',
-    //         ])
-    //         ->line('Please find your ticket details attached as a PDF.')
-    //         ->line('We look forward to seeing you at the event!');
-    // }
-
     public function toMail($notifiable)
     {
         $mailMessage = (new MailMessage)

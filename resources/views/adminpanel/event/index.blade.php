@@ -36,7 +36,7 @@
                             <th>Event</th>
                             <th>Status</th>
                             <th>Time & Date (Start/End)</th>
-                            <th>Ticket Price</th>
+                            <th>Ticket Information</th>
                             <th>Approval</th>
                             <th>Actions</th>
                         </tr>
@@ -68,7 +68,12 @@
                                         
                                     </td>
 
-                                    <td> <span class="fw-bold">$</span> {{number_format($event->ticket_price , 2)}} </td>
+                                    <td>    
+                                        <span class="fw-bold">Ticket Price: </span>${{number_format($event->ticket_price , 2)}} <br>
+                                        <span class="fw-bold">Ticket Capacity: </span>{{$event->information['max_event_capacity'] ?? ''}} <br>
+                                        <span class="fw-bold">Ticket Sold: </span>{{$event->information['ticket_sold'] ?? ''}}<br>
+                                        <span class="fw-bold">Purchase Limit: </span>{{$event->information['max_ticket_purchase_limit'] ?? ''}}<br>
+                                    </td>
 
                                     <td>
                                         @if ($event->approve == 0)

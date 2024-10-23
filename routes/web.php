@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 // Include the auth routes
 require __DIR__ . '/auth.php';
 
 // Include the log routes
 require __DIR__ . '/log.php';
+
+// Auth::routes(['verify' => true]);
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -52,10 +55,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::resource('integration', IntegrationController::class);
     Route::resource('ticket', TicketController::class);
 
-    //Event Routes
+    // Event Routes
     Route::resource('event', EventController::class);
     Route::get('event/approve/{event}/{value?}', [EventController::class, 'approve'])->name('event.approve');
     
+    // Stripe Routes
+    Route::get('/stripe/success/{ticketID}', [\App\Http\Controllers\Stripe\StripeController::class, 'success'])->name('stripe.success');
+    Route::get('/stripe/cancel', [\App\Http\Controllers\Stripe\StripeController::class, 'cancel'])->name('stripe.cancel');
+    
+
 });
 
 
