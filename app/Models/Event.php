@@ -22,12 +22,14 @@ class Event extends Model
         'status',
         'approve',
         'user_id',
-        'ticket_price'
+        'ticket_price',
+        'rules'
     ];
 
     protected $casts = [
         'attendees' => 'array', // Cast JSON to array
         'reminders' => 'array', // Cast JSON to array
+        'rules' => 'array', // Cast JSON to array
     ];
 
     public function tickets(){

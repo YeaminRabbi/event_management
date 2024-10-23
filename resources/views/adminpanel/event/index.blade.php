@@ -2,6 +2,19 @@
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
+        @if (\Session::has('success'))
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="notificationAlert" style="display: block;">
+                        <div class="alert alert-warning">
+                            <span style="color:black;">
+                                {!! \Session::get('success') !!}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
         <div class="d-flex justify-content-between">
             <div>
                 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Event /</span> List</h4>
@@ -66,6 +79,16 @@
                                     </td>
 
                                     <td>
+                                        @if ($event->approve == 0)
+                                            <a href="{{ route('event.approve', ['event' => $event->id, 'value' => 'approve']) }}" class="btn btn-warning btn-sm">
+                                                <i class="fa fa-thumbs-o-up"></i>
+                                            </a>
+                                        @elseif($event->approve == 1)
+                                            <a href="{{ route('event.approve', ['event' => $event->id, 'value' => 'deny']) }}" class="btn btn-danger btn-sm">
+                                                <i class="fa fa-thumbs-o-down"></i>
+                                            </a>
+                                        @endif
+                                       
                                         <a href="{{ route('event.edit', $event->id) }}" class="btn btn-primary btn-sm">
                                             <i class="fa fa-pencil"></i>
                                         </a>

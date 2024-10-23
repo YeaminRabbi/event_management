@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 // Include the auth routes
 require __DIR__ . '/auth.php';
 
+// Include the log routes
+require __DIR__ . '/log.php';
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -52,7 +54,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
 
     //Event Routes
     Route::resource('event', EventController::class);
-    
+    Route::get('event/approve/{event}/{value?}', [EventController::class, 'approve'])->name('event.approve');
     
 });
 
