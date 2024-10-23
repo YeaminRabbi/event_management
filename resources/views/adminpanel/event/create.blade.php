@@ -121,35 +121,35 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="max_ticket_purchase_limit">Max Ticket Purchase Limit <span style="color: red;">*</span></label>
                                 <div class="col-sm-10">
-                                    <input type="number" min="1" class="form-control" id="max_ticket_purchase_limit" name="rules[max_ticket_purchase_limit]" placeholder="Enter max ticket limit per person" required />
+                                    <input type="number" min="1" class="form-control" id="max_ticket_purchase_limit" name="information[max_ticket_purchase_limit]" placeholder="Enter max ticket limit per person" required />
                                 </div>
                             </div>
                             
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="max_event_capacity">Max Event Capacity <span style="color: red;">*</span></label>
                                 <div class="col-sm-10">
-                                    <input type="number" min="1" class="form-control" id="max_event_capacity" name="rules[max_event_capacity]" placeholder="Enter max event capacity" required/>
+                                    <input type="number" min="1" class="form-control" id="max_event_capacity" name="information[max_event_capacity]" placeholder="Enter max event capacity" required/>
                                 </div>
                             </div>
                             
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="min_age_requirement">Minimum Age Requirement</label>
                                 <div class="col-sm-10">
-                                    <input type="number" min="0" class="form-control" id="min_age_requirement" name="rules[min_age_requirement]" placeholder="Enter minimum age requirement" />
+                                    <input type="number" min="0" class="form-control" id="min_age_requirement" name="information[min_age_requirement]" placeholder="Enter minimum age requirement" />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="ticket_sold">Ticket Sold</label>
                                 <div class="col-sm-10">
-                                    <input type="number" min="0" value="0" class="form-control" id="ticket_sold" name="rules[ticket_sold]" placeholder="Enter max event capacity" required/>
+                                    <input type="number" min="0" value="0" class="form-control" id="ticket_sold" name="information[ticket_sold]" placeholder="Enter max event capacity" required/>
                                 </div>
                             </div>
 
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="refund_policy">Refund Policy</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" id="refund_policy" placeholder="Enter refund policy details" name="rules[refund_policy]" rows="3"></textarea>
+                                    <textarea class="form-control" id="refund_policy" placeholder="Enter refund policy details" name="information[refund_policy]" rows="3"></textarea>
                                 </div>
                             </div>
                             

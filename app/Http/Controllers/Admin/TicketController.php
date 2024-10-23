@@ -73,9 +73,9 @@ class TicketController extends Controller
 
 
             // do this after successfuly payment is completed
-            $rules = $event->rules;
-            $rules['ticket_sold'] += $request->ticket_quantity; // Update ticket_sold
-            $event->update(['rules' => $rules]); // Save the updated rules
+            $information = $event->information;
+            $information['ticket_sold'] += $request->ticket_quantity; // Update ticket_sold
+            $event->update(['information' => $information]); // Save the updated information
 
             // Send the notification to the provided email
             if(env('SEND_MAIL') == 'true'){
@@ -110,7 +110,7 @@ class TicketController extends Controller
 
     public function checkAvailability(Event $event, $purchase_ticket_qty = 1){
         
-        if(((int)$event->rules['max_event_capacity'] - (int)$event->rules['ticket_sold'] - (int)$purchase_ticket_qty) < 0){
+        if(((int)$event->information['max_event_capacity'] - (int)$event->information['ticket_sold'] - (int)$purchase_ticket_qty) < 0){
             return false;
         }
 

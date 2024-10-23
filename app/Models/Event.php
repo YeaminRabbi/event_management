@@ -23,16 +23,21 @@ class Event extends Model
         'approve',
         'user_id',
         'ticket_price',
-        'rules'
+        'information'
     ];
 
     protected $casts = [
         'attendees' => 'array', // Cast JSON to array
         'reminders' => 'array', // Cast JSON to array
-        'rules' => 'array', // Cast JSON to array
+        'information' => 'array', // Cast JSON to array
     ];
 
     public function tickets(){
         return $this->hasMany(Event::class);
+    }
+
+    public function organizer()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
