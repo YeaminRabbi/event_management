@@ -34,7 +34,6 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
-
         $request->validate([
             'summary' => 'required|string|max:255',
             'location' => 'nullable|string|max:255',
@@ -43,9 +42,9 @@ class EventController extends Controller
             'description' => 'nullable|string',
             'status' => 'required|string|in:confirmed,tentative,cancelled', // Validate status
             'file' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // Validate image upload
-            'ticket_price' => 'required'
+            'ticket_price' => 'required',
+            'rules' => 'nullable',
         ]);
-
 
         // Begin a transaction to ensure all or nothing happens
         DB::beginTransaction();
@@ -60,7 +59,8 @@ class EventController extends Controller
                 'ticket_price' => $request->input('ticket_price'),
                 'description' => $request->input('description'),
                 'status' => $request->input('status'),
-                'approve' => 0, // Set active to 1 (or modify according to your requirements)
+                'approve' => 0,
+                'rules' => $request->input('rules'),
             ]);
 
 
@@ -117,6 +117,7 @@ class EventController extends Controller
                 }
             }
 
+
             // Commit the transaction
             DB::commit();
 
@@ -152,7 +153,8 @@ class EventController extends Controller
             'description' => 'nullable|string',
             'status' => 'required|string|in:confirmed,tentative,cancelled', // Validate status
             'file' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // Validate image upload
-            'ticket_price' => 'required'
+            'ticket_price' => 'required',
+            'rules' => 'nullable',
         ]);
 
         // Begin a transaction to ensure all or nothing happens
@@ -168,6 +170,7 @@ class EventController extends Controller
                 'description' => $request->input('description'),
                 'status' => $request->input('status'),
                 'ticket_price' => $request->input('ticket_price'),
+                'rules' => ($request->input('rules')),
             ]);
 
 
@@ -271,6 +274,16 @@ class EventController extends Controller
             'description' => $event->description,
             'start' => $event->start,
             'end' => $event->end,
+            'status' => $event->status,
+            'max_ticket' => $event->rules['max_ticket_purchase_limit'] ?? null,
+            'max_event_capacity' => $event->rules['max_event_capacity'] ?? null,
+            'ticket_sold' => $event->rules['ticket_sold'] ?? 0,
         ]);
+    }
+
+    public function approve(Event $event, $value = 'approve'){
+        $event->update(['approve' => $value == 'approve' ? 1 : 0]);
+
+        return back()->with('success', 'Event Approved Successfuly!');
     }
 }

@@ -22,7 +22,7 @@
             @endforeach
         @endif
 
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Ticket / </span> Create</h4>
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Ticket / </span> Purchase</h4>
         <div class="row">
             <div class="col-md-8">
                 <div class="card mb-4">
@@ -51,7 +51,7 @@
                                         style="color: red;">*</span></label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="purchase_name" name="purchase_name"
-                                        value="{{ old('purchase_name') }}" required />
+                                        value="{{ old('purchase_name') }}" placeholder="Enter Participant's Name" required />
                                 </div>
                             </div>
 
@@ -60,16 +60,26 @@
                                         style="color: red;">*</span></label>
                                 <div class="col-sm-10">
                                     <input type="email" class="form-control" id="purchase_email" name="purchase_email"
-                                        value="{{ old('purchase_email') }}" required />
+                                        value="{{ old('purchase_email') }}" placeholder="Enter Participant's Email" required />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="ticket_quantity">Ticket Quantity <span
-                                        style="color: red;">*</span></label>
+                                <label class="col-sm-2 col-form-label" for="purchase_phone">Phone </label>
                                 <div class="col-sm-10">
-                                    <input type="number" min="1" class="form-control" id="ticket_quantity"
-                                        name="ticket_quantity" value="{{ old('ticket_quantity', 1) }}" required />
+                                    <input type="text" class="form-control" id="purchase_phone" name="purchase_phone"
+                                        value="{{ old('purchase_phone') }}" placeholder="Enter Participant's Phone" required />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="ticket_quantity">Ticket Quantity <span style="color: red;">*</span></label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <button type="button" class="btn btn-outline-secondary disable" id="ticket_quantity_minus" onclick="changeQuantity(-1)">-</button>
+                                        <input type="number" min="1" class="form-control text-center" id="ticket_quantity" name="ticket_quantity" value="{{ old('ticket_quantity', 1) }}" required />
+                                        <button type="button" class="btn btn-outline-secondary disable" id="ticket_quantity_plus" onclick="changeQuantity(1)">+</button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -132,10 +142,18 @@
 
                             <div class="row mb-3">
                                 <div class="col-sm-12">
-                                    <label class="col-form-label">Description</label>
-                                    <textarea class="form-control" id="event_description" readonly></textarea>
+                                    <label class="col-form-label">Event Capacity</label>
+                                    <input class="form-control" id="max_event_capacity" readonly />
                                 </div>
                             </div>
+
+                            <div class="row mb-3">
+                                <div class="col-sm-12">
+                                    <label class="col-form-label">Ticket Sold</label>
+                                    <input class="form-control" id="ticket_sold" readonly />
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -157,7 +175,8 @@
 
                         document.getElementById('ticket_price').value = data.price;
                         document.getElementById('event_location').value = data.location;
-                        document.getElementById('event_description').value = data.description;
+                        document.getElementById('max_event_capacity').value = data.max_event_capacity;
+                        document.getElementById('ticket_sold').value = data.ticket_sold;
 
                         // Format the start and end dates
                         document.getElementById('event_start').value = formatDate(new Date(data.start));
@@ -167,6 +186,9 @@
 
                         // Calculate the total amount based on the current quantity
                         calculateTotal();
+
+                        // update ticket calculation
+                        ticketQuantitySetup(data);
                     })
                     .catch(function(error) {
                         console.log(error);
@@ -208,6 +230,35 @@
                 month: 'short',
                 year: 'numeric'
             }).replace(',', '');
+        }
+
+        // Function for ticket quantity
+        function changeQuantity(amount) {
+            const input = document.getElementById('ticket_quantity');
+            let currentValue = parseInt(input.value);
+            
+            if (!isNaN(currentValue)) {
+                currentValue += amount;
+                if (currentValue < 1) {
+                    currentValue = 1; // Minimum value should be 1
+                }
+
+                input.value = currentValue;
+                calculateTotal();
+            }
+        }
+
+        // Remove disable from the quantity field and buttons
+        function ticketQuantitySetup(event){
+            const plus = document.getElementById('ticket_quantity_plus');
+            const minus = document.getElementById('ticket_quantity_minus');
+            const input = document.getElementById('ticket_quantity');
+            const max_ticket = event.max_ticket
+            const max_event_capacity = event.max_event_capacity
+
+            plus.classList.remove('disable');
+            minus.classList.remove('disable');
+            input.setAttribute('max', max_ticket); 
         }
     </script>
 @endsection

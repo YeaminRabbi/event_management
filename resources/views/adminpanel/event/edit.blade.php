@@ -27,32 +27,30 @@
             <div class="col-xxl">
                 <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">Event Information</h5>
+                        <h5 class="mb-0">Edit Event Information</h5>
                     </div>
                     <div class="card-body">
                         <form action="{{ route('event.update', $event->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="event-summary">Event Name <span
-                                        style="color: red;">*</span></label>
+                                <label class="col-sm-2 col-form-label" for="event-summary">Event Name <span style="color: red;">*</span></label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="event-summary"
-                                        placeholder="Enter Event Summary" name="summary"  value="{{ old('summary', $event->summary) }}" required />
+                                    <input type="text" class="form-control" id="event-summary" placeholder="Enter Event Name"
+                                        name="summary" value="{{ old('summary', $event->summary) }}" required />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="event-location">Location</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="event-location"
-                                        placeholder="Enter Event Location" name="location" value="{{ old('location', $event->location) }}" />
+                                    <input type="text" class="form-control" id="event-location" placeholder="Enter Event Location"
+                                        name="location" value="{{ old('location', $event->location) }}" />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="event-start">Start Time <span
-                                        style="color: red;">*</span></label>
+                                <label class="col-sm-2 col-form-label" for="event-start">Start Time <span style="color: red;">*</span></label>
                                 <div class="col-sm-10">
                                     <input type="datetime-local" class="form-control" id="event-start" name="start"
                                         value="{{ old('start', \Carbon\Carbon::parse($event->start)->format('Y-m-d\TH:i')) }}" required />
@@ -60,8 +58,7 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="event-end">End Time <span
-                                        style="color: red;">*</span></label>
+                                <label class="col-sm-2 col-form-label" for="event-end">End Time <span style="color: red;">*</span></label>
                                 <div class="col-sm-10">
                                     <input type="datetime-local" class="form-control" id="event-end" name="end"
                                         value="{{ old('end', \Carbon\Carbon::parse($event->end)->format('Y-m-d\TH:i')) }}" required />
@@ -71,7 +68,9 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="ticket-price">Ticket Price <span style="color: red;">*</span></label>
                                 <div class="col-sm-10">
-                                    <input type="number" step="0.01" min="0" class="form-control" id="ticket-price" name="ticket_price" placeholder="Enter Ticket Price" required value="{{ old('ticket_price', $event->ticket_price)}}" pattern="^\d+(\.\d{1,2})?$" title="Please enter a valid price with up to 2 decimal places" />
+                                    <input type="number" step="0.01" min="0" class="form-control" id="ticket-price" name="ticket_price"
+                                        placeholder="Enter Ticket Price" value="{{ old('ticket_price', $event->ticket_price) }}" required
+                                        pattern="^\d+(\.\d{1,2})?$" title="Please enter a valid price with up to 2 decimal places" />
                                 </div>
                             </div>
 
@@ -84,11 +83,9 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="event-status">Status <span
-                                    style="color: red;">*</span></label>
+                                <label class="col-sm-2 col-form-label" for="event-status">Status <span style="color: red;">*</span></label>
                                 <div class="col-sm-10">
                                     <select class="form-control" id="event-status" name="status">
-                                        <option value="" selected disabled>--select status--</option>
                                         <option value="confirmed" {{ old('status', $event->status) == 'confirmed' ? 'selected' : '' }}>Confirmed</option>
                                         <option value="cancelled" {{ old('status', $event->status) == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                                     </select>
@@ -99,7 +96,48 @@
                                 <label class="col-sm-2 col-form-label" for="event-image">Image</label>
                                 <div class="col-sm-10">
                                     <input type="file" class="form-control" id="event-image" name="file" />
-                                    <small class="form-text text-muted">Leave blank to keep current image.</small>
+                                    @if ($event->image)
+                                        <p>Current Image: <a href="{{ asset('storage/' . $event->image) }}" target="_blank">{{ $event->image }}</a></p>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <hr class="my-4">
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="max_ticket_purchase_limit">Max Ticket Purchase Limit <span style="color: red;">*</span></label>
+                                <div class="col-sm-10">
+                                    <input type="number" min="1" class="form-control" id="max_ticket_purchase_limit" name="rules[max_ticket_purchase_limit]"
+                                        placeholder="Enter max ticket limit per person" value="{{ old('rules.max_ticket_purchase_limit', $event->rules['max_ticket_purchase_limit'] ?? '') }}"  required/>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="max_event_capacity">Max Event Capacity <span style="color: red;">*</span></label>
+                                <div class="col-sm-10">
+                                    <input type="number" min="1" class="form-control" id="max_event_capacity" name="rules[max_event_capacity]"
+                                        placeholder="Enter max event capacity" value="{{ old('rules.max_event_capacity', $event->rules['max_event_capacity'] ?? '') }}" required />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="min_age_requirement">Minimum Age Requirement</label>
+                                <div class="col-sm-10">
+                                    <input type="number" min="0" class="form-control" id="min_age_requirement" name="rules[min_age_requirement]"
+                                        placeholder="Enter minimum age requirement" value="{{ old('rules.min_age_requirement', $event->rules['min_age_requirement'] ?? '') }}" />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="ticket_sold">Ticket Sold</label>
+                                <div class="col-sm-10">
+                                    <input type="number" min="0" value="{{ old('rules.ticket_sold', $event->rules['ticket_sold'] ?? '') }}" class="form-control" id="ticket_sold" name="rules[ticket_sold]" placeholder="Enter max event capacity" required/>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="refund_policy">Refund Policy</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" id="refund_policy" placeholder="Enter refund policy details"
+                                        name="rules[refund_policy]" rows="3">{{ old('rules.refund_policy', $event->rules['refund_policy'] ?? '') }}</textarea>
                                 </div>
                             </div>
 

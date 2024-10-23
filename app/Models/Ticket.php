@@ -10,6 +10,11 @@ class Ticket extends Model
 {
     use HasFactory, SoftDeletes;
 
+    // Cast the ticket_numbers to an array
+    protected $casts = [
+        'ticket_numbers' => 'array',
+    ];
+
     protected $fillable = [
         'purchase_name',
         'purchase_email',
@@ -20,7 +25,8 @@ class Ticket extends Model
         'payment_status',
         'stripe_payment_id',
         'total_amount',
-        'event_id'
+        'event_id',
+        'ticket_numbers'
     ];
 
     public function event(){
