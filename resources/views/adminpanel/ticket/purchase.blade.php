@@ -102,7 +102,7 @@
 
                             <div class="row justify-content-end">
                                 <div class="col-sm-10">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-primary">Purchase</button>
                                     <a href="{{ route('ticket.index') }}" class="btn btn-dark">Back to List</a>
                                 </div>
                             </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Notifications\TicketPurchasedNotification;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Stripe\StripeController;
 use App\Models\Ticket;
 use App\Models\Event;
 use Illuminate\Http\Request;
@@ -17,7 +18,8 @@ class TicketController extends Controller
 {
     public function index()
     {
-        return view('adminpanel.ticket.index');
+        $tickets = Ticket::latest()->get();
+        return view('adminpanel.ticket.index', compact('tickets'));
     }
 
     public function create()
@@ -39,11 +41,9 @@ class TicketController extends Controller
         ]);
 
         // get the event information
-        $event = Event::findorfail($request->event_id);           
+        $event = Event::findorfail($request->event_id);
 
-        // return self::checkAvailability($event, $request->ticket_quantity);
-
-        if(!self::checkAvailability($event, $request->ticket_quantity)){
+        if (!self::checkAvailability($event, $request->ticket_quantity)) {
             return back()->withErrors('Capacity has reached for ticket purchase!');
         }
 
@@ -78,21 +78,29 @@ class TicketController extends Controller
             $event->update(['information' => $information]); // Save the updated information
 
             // Send the notification to the provided email
-            if(env('SEND_MAIL') == 'true'){
+            if (env('SEND_MAIL') == 'true') {
                 Notification::route('mail', $ticket->purchase_email)
-                ->notify(new TicketPurchasedNotification($ticket));
+                    ->notify(new TicketPurchasedNotification($ticket));
             }
-          
+
 
             // Add Stripe checkout logic here...
+            $stripeRequest = new Request(array_merge($request->all(), [
+                'balance' => $ticket->total_amount
+            ]));
 
+            // Call the Stripe payment process
+            $stripeController = new StripeController();
+            $stripeResponse =  $stripeController->stripe($stripeRequest, $ticket);
 
-            // Commit the transaction
-            DB::commit();
+            // Check if the Stripe URL was returned successfully
+            if ($stripeResponse && $stripeResponse['status'] == 1) {
+                DB::commit();
+                return redirect()->to($stripeResponse['succes_url']); // Redirect to the Stripe checkout session
+            } else {
+                throw new \Exception('Payment failed, transaction aborted.');
+            }
 
-
-            // Flash success message to session
-            return redirect()->route('ticket.create')->with('success', 'Ticket purchased successfully!');
         } catch (\Exception $e) {
 
             // Rollback transaction if something goes wrong
@@ -108,9 +116,10 @@ class TicketController extends Controller
     }
 
 
-    public function checkAvailability(Event $event, $purchase_ticket_qty = 1){
-        
-        if(((int)$event->information['max_event_capacity'] - (int)$event->information['ticket_sold'] - (int)$purchase_ticket_qty) < 0){
+    public function checkAvailability(Event $event, $purchase_ticket_qty = 1)
+    {
+
+        if (((int)$event->information['max_event_capacity'] - (int)$event->information['ticket_sold'] - (int)$purchase_ticket_qty) < 0) {
             return false;
         }
 

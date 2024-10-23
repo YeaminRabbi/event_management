@@ -69,9 +69,10 @@
                                     </td>
 
                                     <td>    
-                                        <span class="fw-bold">Ticket Price: </span>${{number_format($event->ticket_price , 2)}} 
-                                        <span class="fw-bold">Ticket Sold: </span>{{$event->rules}}
-
+                                        <span class="fw-bold">Ticket Price: </span>${{number_format($event->ticket_price , 2)}} <br>
+                                        <span class="fw-bold">Ticket Capacity: </span>{{$event->information['max_event_capacity'] ?? ''}} <br>
+                                        <span class="fw-bold">Ticket Sold: </span>{{$event->information['ticket_sold'] ?? ''}}<br>
+                                        <span class="fw-bold">Purchase Limit: </span>{{$event->information['max_ticket_purchase_limit'] ?? ''}}<br>
                                     </td>
 
                                     <td>

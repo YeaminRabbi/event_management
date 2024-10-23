@@ -32,4 +32,8 @@ class Ticket extends Model
     public function event(){
         return $this->belongsTo(Event::class);
     }
+
+    public function ticket_count(){
+        return count($this->ticket_numbers);
+    }
 }

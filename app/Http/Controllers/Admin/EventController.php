@@ -21,9 +21,7 @@ class EventController extends Controller
 {
     public function index()
     {
-
         $events = Event::latest()->get();
-
         return view('adminpanel.event.index', compact('events'));
     }
 
@@ -40,7 +38,6 @@ class EventController extends Controller
             'start' => 'required|date',
             'end' => 'required|date|after_or_equal:start', // Ensure end date is after or equal to start date
             'description' => 'nullable|string',
-            'status' => 'required|string|in:confirmed,tentative,cancelled', // Validate status
             'file' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // Validate image upload
             'ticket_price' => 'required',
             'information' => 'nullable',
@@ -58,7 +55,7 @@ class EventController extends Controller
                 'end' => $request->input('end'),
                 'ticket_price' => $request->input('ticket_price'),
                 'description' => $request->input('description'),
-                'status' => $request->input('status'),
+                'status' => 'confirmed',
                 'approve' => 0,
                 'information' => $request->input('information'),
             ]);
