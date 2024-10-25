@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Stripe;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Ticket;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use App\Notifications\TicketPurchasedNotification;
 use Illuminate\Support\Facades\Notification;
@@ -66,7 +67,7 @@ class StripeController extends Controller
     public function success(Request $request, $ticketID)
     {
         $ticket = Ticket::findorfail($ticketID);
-        
+
         //fetch event information
         $event = Event::findorfail($ticket->event_id);
 
@@ -75,8 +76,25 @@ class StripeController extends Controller
             $response = $stripe->checkout->sessions->retrieve($request->session_id);
 
             if ($response->status == 'complete') {
+                // Save payment information in the Payment model
+                $payment = Payment::create([
+                    'ticket_id' => $ticket->id,
+                    'event_id' => $event->id,
+                    'payment_intent_id' => $response->payment_intent,
+                    'session_id' => $request->session_id,
+                    'amount_paid' => $response->amount_total / 100, // Total amount paid (in smallest currency unit)
+                    'currency' => $response->currency,
+                    'payment_status' => $response->payment_status, // E.g., "paid"
+                    'payment_method' => $response->payment_method_types[0], // E.g., "card"
+                    'receipt_url' => $response->receipt_url,
+                    'customer_email' => $response->customer_details->email,
+                    'customer_name' => $response->customer_details->name,
+                    'transaction_date' => now(), // Transaction timestamp
+                ]);
+
                 $ticket->update([
-                    'payment_status' => 'paid'
+                    'payment_status' => 'paid',
+                    'stripe_payment_id' => $payment->id
                 ]);
 
                 // After successfuly payment is completed
@@ -92,7 +110,6 @@ class StripeController extends Controller
             }
 
             return redirect()->route('ticket.edit', $ticketID)->with('success', 'Ticket purchased successfully! You will receive a confirmation email shortly.');
-
         } else {
 
             $ticket->update([
