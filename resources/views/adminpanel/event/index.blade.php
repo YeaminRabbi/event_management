@@ -46,7 +46,7 @@
                             @foreach ($events as $key => $event)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $event->summary }}</td>
+                                    <td class="text-wrap">{{ $event->summary }}</td>
                                     <td>
                                         @switch($event->status)
                                             @case('confirmed')

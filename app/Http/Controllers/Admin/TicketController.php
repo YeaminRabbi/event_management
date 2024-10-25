@@ -28,6 +28,43 @@ class TicketController extends Controller
         return view('adminpanel.ticket.purchase', compact('events'));
     }
 
+    public function edit(Ticket $ticket)
+    {
+        $events = Event::where('approve', 1)->latest()->get();
+        return view('adminpanel.ticket.edit', compact('events', 'ticket'));
+    }
+
+    public function update(Request $request, Ticket $ticket)
+    {
+        try {
+
+            // Add Stripe checkout logic here...
+            $stripeRequest = new Request(array_merge($request->all(), [
+                'balance' => $ticket->total_amount
+            ]));
+
+            // Call the Stripe payment process
+            $stripeController = new StripeController();
+            $stripeResponse =  $stripeController->stripe($stripeRequest, $ticket);
+
+            // Check if the Stripe URL was returned successfully
+            if ($stripeResponse && $stripeResponse['status'] == 1) {
+                return redirect()->to($stripeResponse['succes_url']); // Redirect to the Stripe checkout session
+            } else {
+                throw new \Exception('Payment failed, transaction aborted.');
+            }
+
+        } catch (\Exception $e) {
+
+            // Log the exception details
+            Log::error('System failed: ' . $e->getMessage(), [
+                'exception' => $e,
+            ]);
+
+            return redirect()->back()->withErrors('An error occurred while updating. Please try again.');
+        }
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -71,25 +108,12 @@ class TicketController extends Controller
                 'ticket_numbers' => $ticketNumbers,
             ]);
 
-
-            // do this after successfuly payment is completed
-            $information = $event->information;
-            $information['ticket_sold'] += $request->ticket_quantity; // Update ticket_sold
-            $event->update(['information' => $information]); // Save the updated information
-
-            // Send the notification to the provided email
-            if (env('SEND_MAIL') == 'true') {
-                Notification::route('mail', $ticket->purchase_email)
-                    ->notify(new TicketPurchasedNotification($ticket));
-            }
-
-
             // Add Stripe checkout logic here...
             $stripeRequest = new Request(array_merge($request->all(), [
                 'balance' => $ticket->total_amount
             ]));
 
-            // Call the Stripe payment process
+            //Call the Stripe payment process
             $stripeController = new StripeController();
             $stripeResponse =  $stripeController->stripe($stripeRequest, $ticket);
 
@@ -116,6 +140,7 @@ class TicketController extends Controller
     }
 
 
+
     public function checkAvailability(Event $event, $purchase_ticket_qty = 1)
     {
 
@@ -124,5 +149,12 @@ class TicketController extends Controller
         }
 
         return true;
+    }
+
+    public function destroy(Ticket $ticket)
+    {
+        $ticket->delete();
+
+        return back()->with('success', 'Ticket removed successfully!');
     }
 }
