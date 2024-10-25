@@ -68,7 +68,7 @@
                                 <label class="col-sm-2 col-form-label" for="purchase_phone">Phone </label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="purchase_phone" name="purchase_phone"
-                                        value="{{ old('purchase_phone') }}" placeholder="Enter Participant's Phone" required />
+                                        value="{{ old('purchase_phone') }}" placeholder="Enter Participant's Phone" />
                                 </div>
                             </div>
 

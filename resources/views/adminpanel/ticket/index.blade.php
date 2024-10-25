@@ -42,8 +42,8 @@
                         <tr>
                             <th>SL</th>
                             <th>Event</th>
-                            <th>Participant Info</th>
                             <th>Ticket Info</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -52,41 +52,41 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $ticket->event->summary }}</td>
-                                    <td>{{ $ticket->ticket_count() }}</td>
                                     <td>
-                                        <span class="fw-bold">Name: </span> {{$ticket->purchase_name}} <br>
-                                        <span class="fw-bold">Email: </span> {{$ticket->purchase_email}} <br>
-                                        <span class="fw-bold">Phone: </span> {{$ticket->purchase_phone}} <br>
+                                        <span class="fw-bold">Name: </span> {{ $ticket->purchase_name }} <br>
+                                        <span class="fw-bold">Email: </span> {{ $ticket->purchase_email }} <br>
+                                        <span class="fw-bold">Phone: </span> {{ $ticket->purchase_phone }} <br>
                                     </td>
                                     <td>
-                                        <span class="fw-bold">Ticket Sold: </span> {{$ticket->ticket_quantity}} <br>
-                                        <span class="fw-bold">Ticket Price: </span> {{$ticket->ticket_price}} <br>
-                                        <span class="fw-bold">Total Amount: </span> {{$ticket->total_amount}} <br>
-                                        <span class="fw-bold">Payment Status: </span> 
-                                        <span class="badge {{ $ticket->payment_status == 'paid' ? 'bg-success' : 'bg-danger' }}">
+                                        <span class="fw-bold">Participants: </span> {{ $ticket->ticket_quantity }} <br>
+                                        <span class="fw-bold">Ticket Price: </span> {{ $ticket->ticket_price }} <br>
+                                        <span class="fw-bold">Total Amount: </span> {{ $ticket->total_amount }} <br>
+                                        <span class="fw-bold">Payment Status: </span>
+                                        <span class="badge {{ $ticket->payment_status == 'paid' ? 'bg-success' : ($ticket->payment_status == 'canceled' ? 'bg-danger' : 'bg-warning') }}">
                                             {{ ucfirst($ticket->payment_status) }}
                                         </span>
+                                        
                                         <br>
 
                                     </td>
-                                    
 
-                                    {{-- <td>
-                                        <a href="{{ route('event.edit', $event->id) }}" class="btn btn-primary btn-sm">
+
+                                    <td>
+                                        <a href="{{ route('ticket.edit', $ticket->id) }}" class="btn btn-primary btn-sm">
                                             <i class="fa fa-pencil"></i>
                                         </a>
                                         <a href="#"
-                                            onclick="if(!confirm('Are you sure you want to delete this event?')){event.preventDefault();}else{document.getElementById('delete-form-{{ $key }}').submit();}"
+                                            onclick="if(!confirm('Are you sure you want to delete this ticket?')){event.preventDefault();}else{document.getElementById('delete-form-{{ $key }}').submit();}"
                                             class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>
                                         </a>
 
                                         <form id="delete-form-{{ $key }}"
-                                            action="{{ route('event.destroy', $event->id) }}" method="POST"
+                                            action="{{ route('ticket.destroy', $ticket->id) }}" method="POST"
                                             style="display: none;">
                                             @csrf
                                             @method('DELETE')
                                         </form>
-                                    </td> --}}
+                                    </td>
                                 </tr>
                             @endforeach
                         @else

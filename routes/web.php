@@ -61,7 +61,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     
     // Stripe Routes
     Route::get('/stripe/success/{ticketID}', [\App\Http\Controllers\Stripe\StripeController::class, 'success'])->name('stripe.success');
-    Route::get('/stripe/cancel', [\App\Http\Controllers\Stripe\StripeController::class, 'cancel'])->name('stripe.cancel');
+    Route::get('/stripe/cancel/{ticketID}', [\App\Http\Controllers\Stripe\StripeController::class, 'cancel'])->name('stripe.cancel');
     
 
 });
