@@ -16,17 +16,6 @@ class EventTicketSeeder extends Seeder
      */
     public function run(): void
     {
-        //  // Create 5 random events
-        //  $events = Event::factory()->count(5)->create();
-
-        //  // Create 10 tickets randomly assigned to these events
-        //  foreach ($events as $event) {
-        //      Ticket::factory()->count(2)->create([
-        //          'event_id' => $event->id,
-        //          'ticket_price' =>  $event->ticket_price,
-        //      ]);
-        //  }
-
         $faker = Faker::create();
 
         // Create 5 random events

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use App\Services\GoogleClientService;
@@ -19,10 +20,45 @@ use DateTime;
 
 class EventController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $events = Event::latest()->get();
-        return view('adminpanel.event.index', compact('events'));
+
+        $events = Event::query()
+        ->when($request->filled('date_range'), function ($query) use ($request) {
+            $dateRange = $request->input('date_range');
+            $dates = explode(" - ", $dateRange);
+    
+            $startDate = Carbon::createFromFormat('m/d/Y', $dates[0])->startOfDay();
+            $endDate = Carbon::createFromFormat('m/d/Y', $dates[1])->endOfDay();
+    
+            // Check if the event's start or end date falls within the provided range
+            return $query->where(function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('start', [$startDate, $endDate])
+                      ->orWhereBetween('end', [$startDate, $endDate])
+                      ->orWhere(function ($query) use ($startDate, $endDate) {
+                          // Check if the date range completely overlaps the event period
+                          $query->where('start', '<=', $startDate)
+                                ->where('end', '>=', $endDate);
+                      });
+            });
+        })
+        ->when($request->filled('search'), function ($query) use ($request) {
+            $search = $request->input('search');
+            return $query->where('summary', 'like', '%' . $search . '%')
+                        ->orWhere('location', 'like', '%' . $search . '%');
+        })
+        ->when($request->filled('user_id'), function ($query) use ($request) {
+            $data = $request->input('user_id');
+            return $query->where('user_id', $data);
+        })
+        ->latest()
+        ->paginate(20);
+
+        $users = User::where('status', 1)
+            ->latest()
+            ->get();
+
+        return view('adminpanel.event.index', compact('events', 'users'));
     }
 
     public function create()
