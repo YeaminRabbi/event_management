@@ -26,10 +26,67 @@
             </div>
         </div>
 
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <form action="{{ route('event.index') }}" method="GET">
+                    <div class="row">
+                        
+                        <div class="col-md-4 mb-3">
+                            <label for="search" class="form-label">Search </label>
+                            <input type="text" name="search" id="search" class="form-control"
+                                value="{{ request()->input('search') }}" placeholder="Search event info">
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <label for="approve" class="form-label">Approve</label>
+                            <select name="approve" id="approve" class="form-control">
+                                <option value="" selected disabled>--choose option--</option>
+                                <option value="1">Approved</option>
+                                <option value="0">Pending</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select name="status" id="status" class="form-control">
+                                <option value="" selected disabled>--choose option--</option>
+                                <option value="confirmed">Confirmed</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="user_id" class="form-label">Oraganizer</label>
+                            <select name="user_id" id="user_id" class="form-control">
+                                <option value="" selected disabled>--choose option--</option>
+                                @if ($users)
+                                    @foreach ($users as $user)
+                                        <option value="{{$user->id}}">{{$user->name}}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="date_range" class="form-label">Date Range</label>
+                            <input type="text" name="date_range" id="date_range" class="form-control"
+                                value="{{ request()->input('date_range') }}" placeholder="Select date range">
+                        </div>
+                        
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn btn-primary">Filter</button>
+                            <a href="{{ route('event.index') }}" class="btn btn-secondary">Reset</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <!-- Basic Bootstrap Table -->
         <div class="card">
             <div class="table-responsive text-nowrap p-4">
-                <table class="table" id="DataTable">
+                {{ $events->links() }}
+                <table class="table" id="DataTable-custom">
                     <thead>
                         <tr>
                             <th>SL</th>
@@ -118,22 +175,38 @@
                         @endif
                     </tbody>
                 </table>
+                {{ $events->links() }}
             </div>
         </div>
         <!--/ Basic Bootstrap Table -->
     </div>
 @endsection
 
-@section('css')
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
-@endsection
 
 @section('js')
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#DataTable').DataTable();
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+<script>
+    $(function () {
+        $('input[name="date_range"]').daterangepicker({
+            autoUpdateInput: false,
+            locale: {
+                cancelLabel: 'Clear'
+            }
         });
-    </script>
+
+        $('input[name="date_range"]').on('apply.daterangepicker', function (ev, picker) {
+            $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format(
+                'MM/DD/YYYY'));
+        });
+
+        $('input[name="date_range"]').on('cancel.daterangepicker', function (ev, picker) {
+            $(this).val('');
+        });
+    });
+
+</script>
 @endsection
