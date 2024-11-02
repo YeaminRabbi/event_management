@@ -23,4 +23,14 @@ class Payment extends Model
         'customer_name',
         'transaction_date',
     ];
+
+
+    public function event(){
+        return $this->belongsTo(Event::class, 'event_id');
+    }
+
+    public function ticket(){
+        return $this->belongsTo(Ticket::class, 'ticket_id');
+    }
 }
+
