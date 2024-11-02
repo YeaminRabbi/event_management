@@ -1,0 +1,2 @@
+- need to setup cron job for Ticket purchase 
+- set SEND_MAIL=true from .env file

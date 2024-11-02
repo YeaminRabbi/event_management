@@ -124,6 +124,7 @@
                                         <span class="fw-bold">Method: </span> {{ $payment->payment_method }} <br>
                                         <span class="fw-bold">Currency: </span> {{ $payment->currency }} <br>
                                         <span class="fw-bold">Transaction: </span> {{ date('d M, Y | h:ia', strtotime($payment->transaction_date)) }} <br>
+                                        <span class="fw-bold">Card no: </span> {{ $payment->last_four_digits ? '******'. $payment->last_four_digits : 'n/a' }} <br>
                                     </td>
                                     <td>
                                         <a href="{{ route('payment.show', ['payment' => $payment->id]) }}" class="btn btn-primary btn-sm">

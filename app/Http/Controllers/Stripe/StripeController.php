@@ -76,6 +76,16 @@ class StripeController extends Controller
             $response = $stripe->checkout->sessions->retrieve($request->session_id);
 
             if ($response->status == 'complete') {
+                
+                // Retrieve the PaymentIntent to get the payment method details
+                $paymentIntent = $stripe->paymentIntents->retrieve(
+                    $response->payment_intent,
+                    ['expand' => ['payment_method']]
+                );
+
+                // Get the last 4 digits of the card
+                $last4 = $paymentIntent->payment_method->card->last4 ?? null;
+
                 // Save payment information in the Payment model
                 $payment = Payment::create([
                     'ticket_id' => $ticket->id,
@@ -90,6 +100,7 @@ class StripeController extends Controller
                     'customer_email' => $response->customer_details->email,
                     'customer_name' => $response->customer_details->name,
                     'transaction_date' => now(), // Transaction timestamp
+                    'last_four_digits' =>  $last4,
                 ]);
 
                 $ticket->update([

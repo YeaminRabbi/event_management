@@ -104,6 +104,12 @@
                                         <input type="text" class="form-control" value="{{ $payment->customer_email }}" readonly />
                                     </div>
                                 </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label">Card No.</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" value="{{ $payment->last_four_digits ? '******'. $payment->last_four_digits : 'n/a' }}" readonly />
+                                    </div>
+                                </div>
         
                                 
                             </div>
