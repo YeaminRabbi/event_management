@@ -22,6 +22,7 @@ class Payment extends Model
         'customer_email',
         'customer_name',
         'transaction_date',
+        'last_four_digits'
     ];
 
 
