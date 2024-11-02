@@ -34,10 +34,64 @@
             </div>
         </div>
 
+        <div class="card mb-4">
+            <div class="card-body">
+                <form action="{{ route('ticket.index') }}" method="GET">
+                    <div class="row">
+
+                        <div class="col-md-3 mb-3">
+                            <label for="search" class="form-label">Search </label>
+                            <input type="text" name="search" id="search" class="form-control"
+                                value="{{ request()->input('search') }}" placeholder="Search ticket info">
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="event_id" class="form-label">Events</label>
+                            <select name="event_id" id="event_id" class="form-control">
+                                <option value="" selected disabled>--choose option--</option>
+                                @if ($events)
+                                    @foreach ($events as $event)
+                                        <option value="{{ $event->id }}">{{ $event->summary }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="date_range" class="form-label">Date Range</label>
+                            <input type="text" name="date_range" id="date_range" class="form-control"
+                                value="{{ request()->input('date_range') }}" placeholder="Select date range">
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="status" class="form-label">Payment Status</label>
+                            <select name="status" id="status" class="form-control">
+                                <option value="" selected disabled>--choose option--</option>
+                                <option value="paid">paid</option>
+                                <option value="pending">pending</option>
+                                <option value="cancelled">cancelled</option>
+                            </select>
+                        </div>
+
+
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn btn-primary">Filter</button>
+                            <a href="{{ route('ticket.index') }}" class="btn btn-secondary">Reset</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
         <!-- Basic Bootstrap Table -->
         <div class="card">
             <div class="table-responsive text-nowrap p-4">
-                <table class="table" id="DataTable">
+                <div class="d-flex justify-content-between mb-3">
+                    <div>
+                        Showing {{ $tickets->count() }} of {{ $tickets->total() }} records
+                    </div>
+                    {{ $tickets->links() }}
+                </div>
+                <table class="table" id="DataTable-custom">
                     <thead>
                         <tr>
                             <th>SL</th>
@@ -62,10 +116,11 @@
                                         <span class="fw-bold">Ticket Price: </span> {{ $ticket->ticket_price }} <br>
                                         <span class="fw-bold">Total Amount: </span> {{ $ticket->total_amount }} <br>
                                         <span class="fw-bold">Payment Status: </span>
-                                        <span class="badge {{ $ticket->payment_status == 'paid' ? 'bg-success' : ($ticket->payment_status == 'canceled' ? 'bg-danger' : 'bg-warning') }}">
+                                        <span
+                                            class="badge {{ $ticket->payment_status == 'paid' ? 'bg-success' : ($ticket->payment_status == 'canceled' ? 'bg-danger' : 'bg-warning') }}">
                                             {{ ucfirst($ticket->payment_status) }}
                                         </span>
-                                        
+
                                         <br>
 
                                     </td>
@@ -96,22 +151,62 @@
                         @endif
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-between mb-3">
+                    <div>
+                        Showing {{ $tickets->count() }} of {{ $tickets->total() }} records
+                    </div>
+                    {{ $tickets->links() }}
+                </div>
             </div>
         </div>
         <!--/ Basic Bootstrap Table -->
     </div>
 @endsection
 
-@section('css')
-    {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css"> --}}
-@endsection
-
 @section('js')
-    {{-- <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Include jQuery -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <!-- Include Moment.js -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <!-- Include Date Range Picker -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+
+    {{-- this is the select2 cdn code, need to be furnish for the select tag coz it is breaking the basic design --}}
+    {{-- need to reconstruct --}}
+
+
+    {{-- <!-- Include Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <!-- Include Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <script>
         $(document).ready(function() {
-            $('#DataTable').DataTable();
+            // Initialize Select2 for the event select tag
+            $('#event_id').select2({
+                placeholder: '--choose option--',
+                allowClear: true,
+                width: '100%' // Ensure it takes the full width and aligns with other form elements.
+            });
+
+            // Initialize date range picker
+            $('input[name="date_range"]').daterangepicker({
+                autoUpdateInput: false,
+                locale: {
+                    cancelLabel: 'Clear'
+                }
+            });
+
+            $('input[name="date_range"]').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format(
+                    'MM/DD/YYYY'));
+            });
+
+            $('input[name="date_range"]').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+            });
         });
     </script> --}}
 @endsection

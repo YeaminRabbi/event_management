@@ -51,6 +51,10 @@ class EventController extends Controller
             $data = $request->input('user_id');
             return $query->where('user_id', $data);
         })
+        ->when($request->filled('status'), function ($query) use ($request) {
+            $data = $request->input('status');
+            return $query->where('status', $data);
+        })
         ->latest()
         ->paginate(20);
 

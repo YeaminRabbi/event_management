@@ -85,7 +85,12 @@
         <!-- Basic Bootstrap Table -->
         <div class="card">
             <div class="table-responsive text-nowrap p-4">
-                {{ $events->links() }}
+                <div class="d-flex justify-content-between mb-3">
+                    <div>
+                        Showing {{ $events->count() }} of {{ $events->total() }} records
+                    </div>
+                    {{ $events->links() }}
+                </div>
                 <table class="table" id="DataTable-custom">
                     <thead>
                         <tr>
@@ -175,7 +180,12 @@
                         @endif
                     </tbody>
                 </table>
-                {{ $events->links() }}
+                <div class="d-flex justify-content-between mb-3">
+                    <div>
+                        Showing {{ $events->count() }} of {{ $events->total() }} records
+                    </div>
+                    {{ $events->links() }}
+                </div>
             </div>
         </div>
         <!--/ Basic Bootstrap Table -->

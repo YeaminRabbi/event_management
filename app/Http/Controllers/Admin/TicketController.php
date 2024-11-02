@@ -13,13 +13,42 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class TicketController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $tickets = Ticket::latest()->get();
-        return view('adminpanel.ticket.index', compact('tickets'));
+        $tickets = Ticket::query()
+        ->when($request->filled('date_range'), function ($query) use ($request) {
+            $dateRange = $request->input('date_range');
+            $dates = explode(" - ", $dateRange);
+
+            $startDate = Carbon::createFromFormat('m/d/Y', $dates[0])->startOfDay();
+            $endDate = Carbon::createFromFormat('m/d/Y', $dates[1])->endOfDay();
+
+            return $query->whereBetween('created_at', [$startDate, $endDate]);
+        })
+        ->when($request->filled('search'), function ($query) use ($request) {
+            $searchKey = $request->input('search');
+            return $query->where('purchase_name', 'like', '%' . $searchKey . '%')
+                        ->orWhere('purchase_email', 'like', '%' . $searchKey . '%')
+                        ->orWhere('purchase_phone', 'like', '%' . $searchKey . '%')
+                        ->orWhere('purchase_address', 'like', '%' . $searchKey . '%');
+        })
+        ->when($request->filled('event_id'), function ($query) use ($request) {
+            $eventId = $request->input('event_id');
+            return $query->where('event_id', $eventId);
+        })
+        ->when($request->filled('status'), function ($query) use ($request) {
+            $status = $request->input('status');
+            return $query->where('payment_status', $status);
+        })
+        ->latest()
+        ->paginate(20);
+
+        $events = Event::latest()->get(['id', 'summary']);
+        return view('adminpanel.ticket.index', compact('tickets', 'events'));
     }
 
     public function create()
