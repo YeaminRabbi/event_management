@@ -2,7 +2,7 @@
     <div class="app-brand demo">
         <a href="{{ route('dashboard') }}" class="app-brand-link">
             <img src="{{ asset('images/logo/favicon.png') }}" style="max-width:50px;" alt="">
-            <span class="app-brand-text demo menu-text fw-bolder ms-2">Admin</span>
+            <span class="app-brand-text demo menu-text fw-bolder ms-2">Event</span>
         </a>
 
         <a href="{{ route('dashboard') }}" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -95,6 +95,17 @@
                       </svg>
                 </i>
                 <div data-i18n="Analytics">Tickets</div>
+            </a>
+        </li>
+
+        <li class="menu-item {{ Request::routeIs('payment.*') ? 'active' : '' }}">
+            <a href="{{ route('payment.index') }}" class="menu-link">
+                <i class="menu-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                      </svg>
+                </i>
+                <div data-i18n="Analytics">Payment</div>
             </a>
         </li>
 
