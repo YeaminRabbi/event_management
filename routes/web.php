@@ -14,7 +14,7 @@ require __DIR__ . '/log.php';
 // Auth::routes(['verify' => true]);
 
 Route::get('/', function () {
-    return redirect()->route('dashboard');
+    return redirect()->route('home');
 });
 
 // Google console platform routes
@@ -64,7 +64,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::get('/stripe/success/{ticketID}', [\App\Http\Controllers\Stripe\StripeController::class, 'success'])->name('stripe.success');
     Route::get('/stripe/cancel/{ticketID}', [\App\Http\Controllers\Stripe\StripeController::class, 'cancel'])->name('stripe.cancel');
     
-
 });
+
+
+Route::get('/home', [\App\Http\Controllers\Frontend\FrontendController::class, 'index'])->name('home');
 
 
