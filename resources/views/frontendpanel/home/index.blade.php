@@ -33,7 +33,7 @@
 
     <!-- conference-section - start
     ================================================== -->
-    @include('frontendpanel.home.partials.conference')
+    {{-- @include('frontendpanel.home.partials.conference') --}}
     <!-- conference-section - end
     ================================================== -->
 
@@ -73,7 +73,7 @@
 
     <!-- event-expertise-section - start
     ================================================== -->
-    @include('frontendpanel.home.partials.event-expertise')
+    {{-- @include('frontendpanel.home.partials.event-expertise') --}}
     <!-- event-expertise-section - end
     ================================================== -->
 
@@ -83,7 +83,7 @@
 
     <!-- speaker-section - start
     ================================================== -->
-    @include('frontendpanel.home.partials.speaker')
+    {{-- @include('frontendpanel.home.partials.speaker') --}}
     <!-- speaker-section - end
     ================================================== -->
 
@@ -93,7 +93,7 @@
 
     <!-- advertisement-section - start
     ================================================== -->
-    @include('frontendpanel.home.partials.advertisement')
+    {{-- @include('frontendpanel.home.partials.advertisement') --}}
     <!-- advertisement-section - end
     ================================================== -->
 
@@ -103,7 +103,7 @@
 
     <!-- partners-clients-section - start
     ================================================== -->
-    @include('frontendpanel.home.partials.partners')
+    {{-- @include('frontendpanel.home.partials.partners') --}}
     <!-- partners-clients-section - end
     ================================================== -->
 
@@ -123,7 +123,7 @@
 
     <!-- google map - start
     ================================================== -->
-    @include('frontendpanel.home.partials.map')
+    {{-- @include('frontendpanel.home.partials.map') --}}
     <!-- google map - end
     ================================================== -->
 @endsection

@@ -486,7 +486,7 @@ textarea {
 ================================================== */
 /* preloader - start
 ================================================== */
-#preloader {
+/* #preloader {
   top: 0;
   left: 0;
   width: 100%;
@@ -494,7 +494,7 @@ textarea {
   z-index: 1005;
   position: fixed;
   overflow: visible;
-  background: #fff url("../images/preloader.gif") no-repeat center center; }
+  background: #fff url("../images/preloader.gif") no-repeat center center; } */
 
 /* preloader - end
 ================================================== */
