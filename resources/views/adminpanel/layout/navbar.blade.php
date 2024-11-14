@@ -24,7 +24,7 @@ id="layout-navbar">
                         <div class="d-flex">
                             <div class="flex-shrink-0 me-3">
                                 <div class="avatar">
-                                    <img src="/logo/user-logo.jpg" alt="avatar"
+                                    <img src="{{ asset('images/logo/user-logo.jpg') }}" alt="avatar"
                                         class="w-px-40 h-auto rounded-circle" />
                                 </div>
                             </div>

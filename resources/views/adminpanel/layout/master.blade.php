@@ -43,6 +43,7 @@
     
     <!-- Page CSS -->
     @yield('css')
+    @livewireStyles
 
     <!-- Helpers -->
     <script src="{{ asset('adminpanel/assets/vendor/js/helpers.js') }}"></script>
@@ -131,6 +132,9 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
 
     @yield('js')
+    @stack('scripts')
+    @livewireScripts
+   
 </body>
 
 </html>
