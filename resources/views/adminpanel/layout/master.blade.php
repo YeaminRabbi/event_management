@@ -31,6 +31,8 @@
     <link rel="stylesheet" href="{{ asset('adminpanel/assets/vendor/css/theme-default.css') }}"
         class="template-customizer-theme-css" />
     <link rel="stylesheet" href="{{ asset('adminpanel/assets/css/demo.css') }}" />
+    <link rel="stylesheet" href="{{ asset('adminpanel/assets/css/custom-flash.css') }}" />
+
 
     <!-- Vendors CSS -->
     <link rel="stylesheet"
@@ -41,16 +43,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
         integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 
-    
+
     <!-- Page CSS -->
     @yield('css')
-    @livewireStyles
+
+    {{-- @livewireStyles --}}
 
     <!-- Helpers -->
     <script src="{{ asset('adminpanel/assets/vendor/js/helpers.js') }}"></script>
-
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('adminpanel/assets/js/config.js') }}"></script>
 </head>
 
@@ -84,7 +84,7 @@
                         <div
                             class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
                             <div class="mb-2 mb-md-0">
-                                © {{date('Y')}}, developed with <i style="color: red;">❤</i> by <a
+                                © {{ date('Y') }}, developed with <i style="color: red;">❤</i> by <a
                                     href="https://techstringit.com/" target="_blank"
                                     class="footer-link fw-bolder">Techstring IT</a>
                             </div>
@@ -128,14 +128,15 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-    
+
     <!-- Axios cnd -->
     <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
 
     @yield('js')
     @stack('scripts')
     @livewireScripts
-   
+    <!-- Add Notyf CSS and JS -->
+
 </body>
 
 </html>

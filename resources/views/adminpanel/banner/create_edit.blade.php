@@ -2,40 +2,6 @@
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        @if (\Session::has('success'))
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="notificationAlert" style="display: block;">
-                        <div class="alert alert-success">
-                            <span>
-                                {!! \Session::get('success') !!}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
-
-        @if (\Session::has('warning'))
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="notificationAlert" style="display: block;">
-                        <div class="alert alert-warning">
-                            <span>
-                                {!! \Session::get('warning') !!}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
-
-        @if ($errors->any())
-            @foreach ($errors->all() as $error)
-                <div class="alert alert-danger">{{ $error }}</div>
-            @endforeach
-        @endif
-
         <h4 class="fw-bold py-3 mb-4">
             <span class="text-muted fw-light">Banner/ </span>
             {{ isset($banner) ? 'Edit' : 'Create' }}
@@ -70,7 +36,7 @@
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="basic-default-sub-title"
                                         placeholder="Enter Sub Title" name="sub_title"
-                                        value="{{ old('sub_title', $banner->sub_title ?? '') }}" required />
+                                        value="{{ old('sub_title', $banner->sub_title ?? '') }}" />
                                 </div>
                             </div>
 

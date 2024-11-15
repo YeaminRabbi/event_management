@@ -7,6 +7,7 @@ use App\Models\Banner;
 use Illuminate\Http\Request;
 use App\Services\ImageService;
 use Illuminate\Support\Str;
+use Flasher\Prime\FlasherInterface;
 
 class BannerController extends Controller
 {
@@ -52,7 +53,13 @@ class BannerController extends Controller
             $service->store($request, $banner);          
         }
 
-        return redirect()->back()->with('success', 'Banner created successfully');
+
+        // return redirect()->back()->with('success', 'Banner created successfully');
+        flash()
+            ->option('position', 'bottom-right')
+            ->success('Banner created successfully');
+        return redirect()->back();
+
     }
 
     /**
@@ -64,10 +71,11 @@ class BannerController extends Controller
             $banner->update([
                 'status' => !$banner->status
             ]);
+            $message = $banner->status ? 'Banner activated successfully' : 'Banner deactivated successfully';
 
             return response()->json([
                 'success' => true,
-                'message' => 'Banner status updated successfully',
+                'message' => $message,
                 'status' => $banner->status
             ]);
         } catch (\Exception $e) {
@@ -113,7 +121,11 @@ class BannerController extends Controller
             $service->update($request, $banner);
         }
 
-        return redirect()->route('banner.index')->with('success', 'Banner updated successfully');
+        flash()
+        ->option('position', 'bottom-right')
+        ->success('Banner updated successfully');
+
+        return redirect()->route('banner.index');
     }
 
     /**
@@ -128,6 +140,10 @@ class BannerController extends Controller
             $banner->image->delete();
         }
         $banner->delete();
-        return redirect()->back()->with('success', 'Banner deleted successfully');
+
+        flash()
+        ->option('position', 'bottom-right')
+        ->warning('Banner deleted successfully');
+        return redirect()->back();
     }
 }

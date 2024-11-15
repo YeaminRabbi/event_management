@@ -1,42 +1,21 @@
 @extends('adminpanel.layout.master')
 
-
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        @if (\Session::has('success'))
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="notificationAlert" style="display: block;">
-                        <div class="alert alert-warning">
-                            <span style="color:black;">
-                                {!! \Session::get('success') !!}
-                            </span>
-                        </div>
-                    </div>
-                </div>
+        <div id="customFlash" class="custom-flash" style="display: none;">
+            <div class="flash-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
             </div>
-        @endif
-        @if (\Session::has('warning'))
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="notificationAlert" style="display: block;">
-                        <div class="alert alert-warning">
-                            <span style="color:black;">
-                                {!! \Session::get('warning') !!}
-                            </span>
-                        </div>
-                    </div>
-                </div>
+            <div class="flash-content">
+                <div class="flash-title">Success</div>
+                <div class="flash-message" id="flashMessage"></div>
             </div>
-        @endif
-        <!-- Notification div -->
-        <div class="row">
-            <div class="col-md-12">
-                <div id="notificationAlert" style="display: none;">
-                    <div class="alert alert-warning">
-                        <span style="color:black;" id="notificationMessage"></span>
-                    </div>
-                </div>
+            <div class="flash-progress">
+                <div class="flash-progress-bar" id="flashProgressBar"></div>
             </div>
         </div>
 
@@ -147,6 +126,39 @@
         });
     </script>
     <script>
+        function showFlashMessage(message, type = 'success') {
+            const flash = document.getElementById('customFlash');
+            const messageSpan = document.getElementById('flashMessage');
+            const progressBar = document.getElementById('flashProgressBar');
+            const duration = 3000; // 3 seconds
+
+            // Set message and style
+            messageSpan.textContent = message;
+            flash.className = 'custom-flash';
+            flash.classList.add(`flash-${type}`);
+
+            // Show the message
+            flash.style.display = 'flex';
+
+            // Animate progress bar
+            progressBar.style.width = '100%';
+            progressBar.style.transition = `width ${duration}ms linear`;
+            setTimeout(() => {
+                progressBar.style.width = '0%';
+            }, 100);
+
+            // Hide after duration
+            setTimeout(() => {
+                flash.classList.add('flash-hide');
+                setTimeout(() => {
+                    flash.style.display = 'none';
+                    flash.classList.remove('flash-hide');
+                    progressBar.style.width = '100%';
+                    progressBar.style.transition = 'none';
+                }, 300);
+            }, duration);
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const toggles = document.querySelectorAll('.banner-status-toggle');
             const csrfToken = document.querySelector('input[name="_token"]').value;
@@ -156,7 +168,6 @@
                     const bannerId = this.dataset.bannerId;
                     const isChecked = this.checked;
 
-                    // Updated URL to include 'admin' prefix
                     fetch(`/admin/banners/${bannerId}/toggle-status`, {
                             method: 'PUT',
                             headers: {
@@ -176,16 +187,17 @@
                         })
                         .then(data => {
                             if (data.success) {
-                                // Optional: Show success message using toastr or other notification library
-                                // console.log('Status updated successfully');
-                                // i want 
+                                const messageType = isChecked ? 'success' : 'warning';
+                                showFlashMessage(data.message, messageType);
                             } else {
                                 this.checked = !isChecked;
-                                console.error('Failed to update status');
+                                showFlashMessage('Failed to update status', 'error');
                             }
                         })
                         .catch(error => {
                             this.checked = !isChecked;
+                            showFlashMessage('An error occurred while updating status',
+                            'error');
                             console.error('Error:', error);
                         });
                 });
