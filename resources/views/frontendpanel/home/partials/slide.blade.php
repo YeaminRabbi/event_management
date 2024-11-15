@@ -6,7 +6,7 @@
                 <div class="container">
                     <div class="slider-item-content">
 
-                        <span class="medium-text">one stop</span>
+                        {{-- <span class="medium-text">one stop</span> --}}
                         <h1 class="big-text">Event Planner</h1>
                         <small class="small-text">every event sould be perfect</small>
 
@@ -24,7 +24,7 @@
                 <div class="container">
                     <div class="slider-item-content">
 
-                        <span class="medium-text">one stop</span>
+                        {{-- <span class="medium-text">one stop</span> --}}
                         <h1 class="big-text">Event Planner</h1>
                         <small class="small-text">every event sould be perfect</small>
 
@@ -42,7 +42,7 @@
                 <div class="container">
                     <div class="slider-item-content">
 
-                        <span class="medium-text">one stop</span>
+                        {{-- <span class="medium-text">one stop</span> --}}
                         <h1 class="big-text">Event Planner</h1>
                         <small class="small-text">every event sould be perfect</small>
 

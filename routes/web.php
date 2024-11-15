@@ -64,9 +64,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::get('/stripe/success/{ticketID}', [\App\Http\Controllers\Stripe\StripeController::class, 'success'])->name('stripe.success');
     Route::get('/stripe/cancel/{ticketID}', [\App\Http\Controllers\Stripe\StripeController::class, 'cancel'])->name('stripe.cancel');
 
-    // settings routes
-    // Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
-    // Route::get('/settings/create', [SettingsController::class, 'create'])->name('settings.create');
+    // Banner Routes
+    Route::resource('banner', BannerController::class);
+    Route::put('/banners/{banner}/toggle-status', [BannerController::class, 'toggleStatus'])
+    ->name('banner.toggle-status');
+
+    // Settings routes
     Route::resource('settings', SettingsController::class);
     
     
@@ -74,5 +77,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
 
 
 Route::get('/home', [\App\Http\Controllers\Frontend\FrontendController::class, 'index'])->name('home');
+
 
 
