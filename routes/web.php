@@ -72,10 +72,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     // About Us Routes
     Route::resource('about-us', AboutUsController::class);
     Route::delete('about-us/advantages/{id}', [AboutUsController::class, 'destroyAdvantage'])->name('about-us.advantages');
+
+    // Blog Routes
+    Route::resource('blog', BlogController::class);
+    Route::put('/blog/{blog}/toggle-status', [BlogController::class, 'toggleStatus']);
+
     // Settings routes
     Route::resource('settings', SettingsController::class);
-    
-    
 });
 
 

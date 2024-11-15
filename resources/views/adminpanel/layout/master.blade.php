@@ -42,8 +42,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
         integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-
-
+    
     <!-- Page CSS -->
     @yield('css')
 
@@ -131,6 +130,119 @@
 
     <!-- Axios cnd -->
     <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+
+    <!-- CKEditor CDN -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/decoupled-document/ckeditor.js"></script>
+
+    <script>
+        let editor;
+
+        DecoupledEditor
+            .create(document.querySelector('#editor'), {
+                toolbar: {
+                    items: [
+                        'undo', 'redo',
+                        '|', 'heading',
+                        '|', 'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor',
+                        '|', 'bold', 'italic', 'underline', 'strikethrough',
+                        '|', 'alignment',
+                        '|', 'numberedList', 'bulletedList',
+                        '|', 'outdent', 'indent',
+                        '|', 'link', 'blockQuote', 'insertTable', 'code',
+                        '|', 'horizontalLine'
+                    ],
+                    shouldNotGroupWhenFull: true
+                },
+                heading: {
+                    options: [{
+                            model: 'paragraph',
+                            title: 'Paragraph',
+                            class: 'ck-heading_paragraph'
+                        },
+                        {
+                            model: 'heading1',
+                            view: 'h1',
+                            title: 'Heading 1',
+                            class: 'ck-heading_heading1'
+                        },
+                        {
+                            model: 'heading2',
+                            view: 'h2',
+                            title: 'Heading 2',
+                            class: 'ck-heading_heading2'
+                        },
+                        {
+                            model: 'heading3',
+                            view: 'h3',
+                            title: 'Heading 3',
+                            class: 'ck-heading_heading3'
+                        }
+                    ]
+                },
+                fontSize: {
+                    options: ['small', 'default', 'big', 'huge']
+                },
+                table: {
+                    contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
+                },
+                placeholder: 'Start writing your blog post here...'
+            })
+            .then(newEditor => {
+                editor = newEditor;
+
+                // Store toolbar in dedicated container
+                const toolbarContainer = document.querySelector('#toolbar-container');
+                toolbarContainer.appendChild(editor.ui.view.toolbar.element);
+
+                // Update hidden textarea when editor content changes
+                editor.model.document.on('change:data', () => {
+                    const editorContent = editor.getData();
+                    document.querySelector('#editor-content').value = editorContent;
+
+                    // Validate content length
+                    if (editorContent.trim().length > 0) {
+                        document.querySelector('#editor').classList.remove('invalid-editor');
+                        document.querySelector('#description-error').style.display = 'none';
+                    }
+                });
+
+                // Handle autosave
+                setInterval(() => {
+                    const content = editor.getData();
+                    if (content.trim().length > 0) {
+                        localStorage.setItem('editorContent', content);
+                    }
+                }, 30000); // Autosave every 30 seconds
+
+                // Load autosaved content if exists
+                const savedContent = localStorage.getItem('editorContent');
+                if (savedContent && !editor.getData()) {
+                    editor.setData(savedContent);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        // Custom form validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const editorContent = editor.getData().trim();
+            const editorElement = document.querySelector('#editor');
+            const errorElement = document.querySelector('#description-error');
+
+            if (editorContent.length === 0) {
+                e.preventDefault();
+                editorElement.classList.add('invalid-editor');
+                errorElement.style.display = 'block';
+                editorElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            } else {
+                document.querySelector('#editor-content').value = editorContent;
+                localStorage.removeItem('editorContent'); // Clear autosaved content
+            }
+        });
+    </script>
 
     @yield('js')
     @stack('scripts')
