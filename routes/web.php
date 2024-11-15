@@ -69,6 +69,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::put('/banners/{banner}/toggle-status', [BannerController::class, 'toggleStatus'])
     ->name('banner.toggle-status');
 
+    // About Us Routes
+    Route::resource('about-us', AboutUsController::class);
+    Route::delete('about-us/advantages/{id}', [AboutUsController::class, 'destroyAdvantage'])->name('about-us.advantages');
     // Settings routes
     Route::resource('settings', SettingsController::class);
     
