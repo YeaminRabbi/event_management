@@ -2,12 +2,28 @@
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
+        <div id="customFlash" class="custom-flash" style="display: none;">
+            <div class="flash-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+            </div>
+            <div class="flash-content">
+                <div class="flash-title">Success</div>
+                <div class="flash-message" id="flashMessage"></div>
+            </div>
+            <div class="flash-progress">
+                <div class="flash-progress-bar" id="flashProgressBar"></div>
+            </div>
+        </div>
         <h4 class="fw-bold py-3 mb-4">
             <span class="text-muted fw-light">About Us/ </span>
             {{ isset($aboutUs) ? 'Edit' : 'Create' }}
         </h4>
-        <form action="{{ isset($aboutUs) ? route('about-us.store', $aboutUs->id) : route('about-us.store') }}" method="POST"
-            enctype="multipart/form-data">
+        <form action="{{ isset($aboutUs) ? route('about-us.store', $aboutUs->id) : route('about-us.store') }}"
+            method="POST" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="id" value="{{ $aboutUs->id ?? '' }}">
             <div class="row">
@@ -143,15 +159,18 @@
                 const id = event.target.dataset.advantageId;
                 if (id) {
                     axios.delete(`/admin/about-us/advantages/${advantageId}`)
-                        .then(response => {
+                        .then(data => {
                             element.remove();
                             // flash().success('Advantage deleted successfully');
                             modal.hide();
+                            // console.log(data.data.message); 
+                            showFlashMessage(data.data.message, 'warning');
                         })
                         .catch(error => {
                             // flash().error('Error deleting advantage');
                             console.error(error);
                             modal.hide();
+                            showFlashMessage('Failed to update status', 'error');
                         });
                 } else {
                     element.remove();
@@ -161,6 +180,39 @@
             });
 
             modal.show();
+        }
+
+        function showFlashMessage(message, type = 'success') {
+            const flash = document.getElementById('customFlash');
+            const messageSpan = document.getElementById('flashMessage');
+            const progressBar = document.getElementById('flashProgressBar');
+            const duration = 3000; // 3 seconds
+
+            // Set message and style
+            messageSpan.textContent = message;
+            flash.className = 'custom-flash';
+            flash.classList.add(`flash-${type}`);
+
+            // Show the message
+            flash.style.display = 'flex';
+
+            // Animate progress bar
+            progressBar.style.width = '100%';
+            progressBar.style.transition = `width ${duration}ms linear`;
+            setTimeout(() => {
+                progressBar.style.width = '0%';
+            }, 100);
+
+            // Hide after duration
+            setTimeout(() => {
+                flash.classList.add('flash-hide');
+                setTimeout(() => {
+                    flash.style.display = 'none';
+                    flash.classList.remove('flash-hide');
+                    progressBar.style.width = '100%';
+                    progressBar.style.transition = 'none';
+                }, 300);
+            }, duration);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
