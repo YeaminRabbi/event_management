@@ -1,5 +1,5 @@
 <div>
-    @if (session()->has('success'))
+    {{-- @if (session()->has('success'))
         <div class="row">
             <div class="col-md-12">
                 <div id="notificationAlert" style="display: block;">
@@ -9,7 +9,7 @@
                 </div>
             </div>
         </div>
-    @endif
+    @endif --}}
     <form wire:submit.prevent="saveSetting">
         <div class="row">
             <div class="col-md-6">
@@ -101,7 +101,7 @@
         </div>
     </form>
 
-    @push('scripts')
+    {{-- @push('scripts')
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 setTimeout(function() {
@@ -112,5 +112,5 @@
                 }, 3000);
             });
         </script>
-    @endpush
+    @endpush --}}
 </div>

@@ -7,6 +7,8 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Flasher\Prime\FlasherInterface;
+
 
 class Settings extends Component
 {
@@ -99,7 +101,10 @@ class Settings extends Component
 
         $setting->save();
 
-        session()->flash('success', 'Setting saved successfully.');
+        // session()->flash('success', 'Setting saved successfully.');
+        flash()
+            ->option('position', 'bottom-right')
+            ->success('Setting saved successfully');
 
         return redirect()->back();
     }

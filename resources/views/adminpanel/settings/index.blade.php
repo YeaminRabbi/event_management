@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        @if (\Session::has('success'))
+        {{-- @if (\Session::has('success'))
             <div class="row">
                 <div class="col-md-12">
                     <div id="notificationAlert" style="display: block;">
@@ -31,7 +31,7 @@
                     </div>
                 </div>
             </div>
-        @endif
+        @endif --}}
 
         <div class="d-flex justify-content-between">
             <div>
@@ -122,9 +122,9 @@
             $('#DataTable').DataTable();
         });
     </script>
-    <script>
+    {{-- <script>
         setTimeout(function() {
             $('#notificationAlert').fadeOut('fast');
         }, 3000);
-    </script>
+    </script> --}}
 @endsection

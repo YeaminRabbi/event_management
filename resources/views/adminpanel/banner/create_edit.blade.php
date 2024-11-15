@@ -94,7 +94,7 @@
 
 @section('js')
     <script>
-        $('#notificationAlert').delay(3000).fadeOut('slow');
+        // $('#notificationAlert').delay(3000).fadeOut('slow');
 
         // Image Preview
         function readURL(input) {

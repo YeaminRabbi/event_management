@@ -197,7 +197,7 @@
                         .catch(error => {
                             this.checked = !isChecked;
                             showFlashMessage('An error occurred while updating status',
-                            'error');
+                                'error');
                             console.error('Error:', error);
                         });
                 });

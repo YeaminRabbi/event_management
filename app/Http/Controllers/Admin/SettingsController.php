@@ -32,6 +32,10 @@ class SettingsController extends Controller
             }
         }
         $setting->delete();
-        return redirect()->back()->with('warning', 'Setting deleted successfully!');
+
+        flash()
+            ->option('position', 'bottom-right')
+            ->warning('Setting deleted successfully');
+        return redirect()->back();
     }
 }
