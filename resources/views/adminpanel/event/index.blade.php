@@ -148,11 +148,11 @@
                                     <td>
                                         @if ($event->approve == 0)
                                             <a href="{{ route('event.approve', ['event' => $event->id, 'value' => 'approve']) }}" class="btn btn-warning btn-sm">
-                                                <i class="fa fa-thumbs-o-up"></i>
+                                                <i class="fa fa-thumbs-o-down"></i>
                                             </a>
                                         @elseif($event->approve == 1)
-                                            <a href="{{ route('event.approve', ['event' => $event->id, 'value' => 'deny']) }}" class="btn btn-danger btn-sm">
-                                                <i class="fa fa-thumbs-o-down"></i>
+                                            <a href="{{ route('event.approve', ['event' => $event->id, 'value' => 'deny']) }}" class="btn btn-success btn-sm">
+                                                <i class="fa fa-thumbs-o-up"></i>
                                             </a>
                                         @endif
                                        

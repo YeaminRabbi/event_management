@@ -19,7 +19,7 @@
     <!-- carousel css include -->
     <link rel="stylesheet" type="text/css" href="{{ asset('frontendpanel/assets/css/slick.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('frontendpanel/assets/css/slick-theme.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('frontendpanel/assets/css/animate.cssv') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontendpanel/assets/css/animate.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('frontendpanel/assets/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('frontendpanel/assets/css/owl.theme.default.min.css') }}">
 
@@ -218,8 +218,8 @@
     <script src="{{ asset('frontendpanel/assets/js/owl.carousel.min.js') }}"></script>
 
     <!-- map jquery include -->
-    <script src="{{ asset('frontendpanel/assets/js/gmap3.min.js') }}"></script>
-    <script src="http://maps.google.com/maps/api/js?key=AIzaSyC61_QVqt9LAhwFdlQmsNwi5aUJy9B2SyA"></script>
+    {{-- <script src="{{ asset('frontendpanel/assets/js/gmap3.min.js') }}"></script>
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyC61_QVqt9LAhwFdlQmsNwi5aUJy9B2SyA"></script> --}}
 
     <!-- calendar jquery include -->
     <script src="{{ asset('frontendpanel/assets/js/atc.min.js') }}"></script>

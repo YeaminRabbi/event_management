@@ -12,7 +12,7 @@
                         <!-- site-logo-wrapper - start -->
                         <div class="site-logo-wrapper mb-30">
                             <a href="index-1.html" class="logo">
-                                <img src="assets/images/1.site-logo.png" alt="logo_not_found">
+                                <img src="{{ asset(\App\Helpers\Frontend::Settings('website', 'logo')) }}" alt="logo_not_found">
                             </a>
                         </div>
                         <!-- site-logo-wrapper - end -->
@@ -95,7 +95,7 @@
                         <h3 class="footer-item-title">
                             harmoni <strong>instagram</strong>
                         </h3>
-                        <ul>
+                        {{-- <ul>
                             <li class="image-wrapper">
                                 <img src="assets/images/footer/instagram/img1.png" alt="Image_not_found">
                                 <a href="#!"><i class="fab fa-instagram"></i></a>
@@ -120,7 +120,7 @@
                                 <img src="assets/images/footer/instagram/img6.png" alt="Image_not_found">
                                 <a href="#!"><i class="fab fa-instagram"></i></a>
                             </li>
-                        </ul>
+                        </ul> --}}
                         <h4 class="followus-link">
                             Follow Our Instagram <a href="#!">#Harmoni</a>
                         </h4>

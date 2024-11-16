@@ -87,6 +87,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
 
 
 Route::get('/home', [\App\Http\Controllers\Frontend\FrontendController::class, 'index'])->name('home');
+Route::get('/events/paginate', [\App\Http\Controllers\Frontend\FrontendController::class, 'paginate'])->name('events.paginate');
 
 
 

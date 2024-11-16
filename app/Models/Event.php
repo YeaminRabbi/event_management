@@ -21,6 +21,7 @@ class Event extends Model
         'reminders',
         'status',
         'approve',
+        'event_type',
         'user_id',
         'ticket_price',
         'information'
@@ -39,5 +40,10 @@ class Event extends Model
     public function organizer()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'parentable');
     }
 }

@@ -78,9 +78,10 @@ class EventController extends Controller
             'start' => 'required|date',
             'end' => 'required|date|after_or_equal:start', // Ensure end date is after or equal to start date
             'description' => 'nullable|string',
-            'file' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // Validate image upload
+            'file' => 'required|image|mimes:jpg,jpeg,png|max:2048', // Validate image upload
             'ticket_price' => 'required',
             'information' => 'nullable',
+            'event_type' => 'required|string|max:255',
         ]);
 
         // Begin a transaction to ensure all or nothing happens
@@ -98,6 +99,7 @@ class EventController extends Controller
                 'status' => 'confirmed',
                 'approve' => 0,
                 'information' => $request->input('information'),
+                'event_type' => $request->input('event_type'),
             ]);
 
 
@@ -159,7 +161,13 @@ class EventController extends Controller
             DB::commit();
 
             // Flash success message to session
-            return back()->with('success', 'Event created successfully.');
+            // return back()->with('success', 'Event created successfully.');
+            flash()
+                ->option('position', 'bottom-right')
+                ->success('Event created successfully');
+
+            return redirect()->back();
+
         } catch (\Exception $e) {
 
             // Rollback transaction if something goes wrong
@@ -170,7 +178,12 @@ class EventController extends Controller
                 'exception' => $e,
             ]);
 
-            return redirect()->back()->withErrors('An error occurred while inserting. Please try again.');
+            // return redirect()->back()->withErrors('An error occurred while inserting. Please try again.');
+            flash()
+                ->option('position', 'bottom-right')
+                ->error('An error occurred while inserting. Please try again.');
+
+            return redirect()->back();
         }
     }
 
@@ -189,9 +202,10 @@ class EventController extends Controller
             'end' => 'required|date|after_or_equal:start', // Ensure end date is after or equal to start date
             'description' => 'nullable|string',
             'status' => 'required|string|in:confirmed,tentative,cancelled', // Validate status
-            'file' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // Validate image upload
+            'file' => 'required|image|mimes:jpg,jpeg,png|max:2048', // Validate image upload
             'ticket_price' => 'required',
             'information' => 'nullable',
+            'event_type' => 'required|string|max:255',
         ]);
 
         // Begin a transaction to ensure all or nothing happens
@@ -208,6 +222,7 @@ class EventController extends Controller
                 'status' => $request->input('status'),
                 'ticket_price' => $request->input('ticket_price'),
                 'information' => ($request->input('information')),
+                'event_type' => $request->input('event_type'),
             ]);
 
 
@@ -254,7 +269,12 @@ class EventController extends Controller
 
 
             // Flash success message to session
-            return back()->with('success', 'Event updated successfully.');
+            // return back()->with('success', 'Event updated successfully.');
+            flash()
+                ->option('position', 'bottom-right')
+                ->success('Event updated successfully');
+
+            return redirect()->back();
         } catch (\Exception $e) {
 
             // Rollback transaction if something goes wrong
@@ -265,7 +285,12 @@ class EventController extends Controller
                 'exception' => $e,
             ]);
 
-            return redirect()->back()->withErrors('An error occurred while updating. Please try again.');
+            // return redirect()->back()->withErrors('An error occurred while updating. Please try again.');
+            flash()
+                ->option('position', 'bottom-right')
+                ->error('An error occurred while updating. Please try again.');
+
+            return redirect()->back();
         }
     }
 
@@ -289,9 +314,20 @@ class EventController extends Controller
                 }
             }
             
-
+            // image delete
+            if ($event->image) {
+                if (file_exists(public_path($event->image->url))) {
+                    unlink(public_path($event->image->url));
+                }
+                $event->image->delete();
+            }
             $event->delete();
-            return back()->with('warning', 'Event removed successfully');
+            // return back()->with('warning', 'Event removed successfully');
+            flash()
+                ->option('position', 'bottom-right')
+                ->warning('Event removed successfully');
+
+            return redirect()->back();
 
         } catch (\Exception $e) {
 
@@ -300,7 +336,12 @@ class EventController extends Controller
                 'exception' => $e,
             ]);
 
-            return redirect()->back()->withErrors('An error occurred while removing. Please try again.');
+            // return redirect()->back()->withErrors('An error occurred while removing. Please try again.');
+            flash()
+                ->option('position', 'bottom-right')
+                ->error('An error occurred while removing. Please try again.');
+
+            return redirect()->back();
         }
     }
 
@@ -321,6 +362,10 @@ class EventController extends Controller
     public function approve(Event $event, $value = 'approve'){
         $event->update(['approve' => $value == 'approve' ? 1 : 0]);
 
-        return back()->with('success', 'Event Approved Successfuly!');
+        // return back()->with('success', 'Event Approved Successfuly!');
+        flash()
+            ->option('position', 'bottom-right')
+            ->success('Event Approved Successfuly!');
+        return redirect()->back();
     }
 }

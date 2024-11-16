@@ -8,7 +8,7 @@
                 <div class="col-lg-3">
                     <div class="site-logo-wrapper">
                         <a href="index-1.html" class="logo">
-                            <img src="assets/images/1.site-logo.png" alt="logo_not_found">
+                            <img src="{{ asset(\App\Helpers\Frontend::Settings('website', 'logo')) }}" alt="logo_not_found">
                         </a>
                     </div>
                 </div>
@@ -140,7 +140,7 @@
                                             <a href="#login-modal" class="login-modal-btn">
                                                 <i class="fas fa-user"></i>
                                             </a>
-                                            <div id="login-modal" class="reglog-modal-wrapper mfp-hide clearfix"
+                                            {{-- <div id="login-modal" class="reglog-modal-wrapper mfp-hide clearfix"
                                                 style="background-image: url(assets/images/login-modal-bg.jpg);">
                                                 <div class="overlay-black clearfix">
 
@@ -221,9 +221,9 @@
                                                     </a>
 
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </li>
-                                        <li>
+                                        {{-- <li>
                                             <button type="button" class="toggle-overlay search-btn">
                                                 <i class="fas fa-search"></i>
                                             </button>
@@ -242,7 +242,7 @@
                                                 </div>
                                             </div>
                                             <!-- search-body - end -->
-                                        </li>
+                                        </li> --}}
                                     </ul>
                                 </div>
                             </div>
@@ -268,7 +268,7 @@
     <div class="container">
         <div class="logo-area float-left">
             <a href="index-1.html">
-                <img src="assets/images/1.site-logo.png" alt="logo_not_found">
+                <img src="{{ asset(\App\Helpers\Frontend::Settings('website', 'logo')) }}" alt="logo_not_found">
             </a>
         </div>
 
@@ -286,7 +286,7 @@
 
             <div class="sidebar-header">
                 <a href="#!">
-                    <img src="assets/images/2.site-logo.png" alt="logo_not_found">
+                    <img src="{{ asset(\App\Helpers\Frontend::Settings('website', 'logo')) }}" alt="logo_not_found">
                 </a>
             </div>
 
@@ -453,7 +453,7 @@
                                 <div class="leftside-content">
                                     <div class="site-logo-wrapper mb-80">
                                         <a href="#!" class="logo">
-                                            <img src="assets/images/2.site-logo.png" alt="logo_not_found">
+                                            <img src="{{ asset(\App\Helpers\Frontend::Settings('website', 'logo')) }}" alt="logo_not_found">
                                         </a>
                                     </div>
                                     <div class="register-login-link mb-80">
@@ -480,7 +480,7 @@
                                                 NOW</strong></span>
                                     </div>
 
-                                    <div class="login-form text-center mb-50">
+                                    {{-- <div class="login-form text-center mb-50">
                                         <form action="#!">
                                             <div class="form-item">
                                                 <input type="email" placeholder="User Name">
@@ -504,7 +504,7 @@
                                             </div>
                                             <button type="submit" class="login-btn">login now</button>
                                         </form>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="bottom-text white-color">
                                         <p class="m-0">
@@ -535,7 +535,7 @@
                                 <div class="leftside-content">
                                     <div class="site-logo-wrapper mb-80">
                                         <a href="#!" class="logo">
-                                            <img src="assets/images/2.site-logo.png" alt="logo_not_found">
+                                            <img src="{{ asset(\App\Helpers\Frontend::Settings('website', 'logo')) }}" alt="logo_not_found">
                                         </a>
                                     </div>
                                     <div class="register-login-link mb-80">

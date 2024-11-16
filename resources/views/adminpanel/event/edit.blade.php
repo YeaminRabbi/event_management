@@ -42,6 +42,19 @@
                             </div>
 
                             <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="event-type">Event Type <span style="color: red;">*</span></label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" id="event-type" name="event_type" required>
+                                        <option value="" disabled selected>--select one--</option>
+                                        <option value="Conference" {{ old('event_type', $event->event_type) == 'Conference' ? 'selected' : '' }}>Conference</option>
+                                        <option value="Play Ground" {{ old('event_type', $event->event_type) == 'Play Ground' ? 'selected' : '' }}>Play Ground</option>
+                                        <option value="Musical" {{ old('event_type', $event->event_type) == 'Musical' ? 'selected' : '' }}>Musical</option>
+                                        <option value="Other" {{ old('event_type', $event->event_type) == 'Other' ? 'selected' : '' }}>Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="event-location">Location</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="event-location" placeholder="Enter Event Location"
@@ -93,11 +106,11 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="event-image">Image</label>
+                                <label class="col-sm-2 col-form-label" for="event-image">Image <span style="color: red;">*</span></label>
                                 <div class="col-sm-10">
-                                    <input type="file" class="form-control" id="event-image" name="file" />
+                                    <input type="file" class="form-control" id="event-image" name="file" required>
                                     @if ($event->image)
-                                        <p>Current Image: <a href="{{ asset('storage/' . $event->image) }}" target="_blank">{{ $event->image }}</a></p>
+                                        <img src="{{ asset($event->image->url) }}" alt="Event Image" width="200px" class="mt-2">
                                     @endif
                                 </div>
                             </div>

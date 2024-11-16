@@ -42,6 +42,20 @@
                             </div>
 
                             <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="event-type">Event Type <span
+                                        style="color: red;">*</span></label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" id="event-type" name="event_type" required>
+                                        <option value="" disabled selected>--select one--</option>
+                                        <option value="Conference">Conference</option>
+                                        <option value="Play Ground">Play Ground</option>
+                                        <option value="Musical">Musical</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="event-location">Location</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="event-location"
@@ -115,9 +129,9 @@
                             </div> --}}
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="event-image">Image</label>
+                                <label class="col-sm-2 col-form-label" for="event-image">Image <span style="color: red;">*</span></label>
                                 <div class="col-sm-10">
-                                    <input type="file" class="form-control" id="event-image" name="file" />
+                                    <input type="file" class="form-control" id="event-image" name="file" required>
                                 </div>
                             </div>
 
