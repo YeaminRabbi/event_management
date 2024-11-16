@@ -60,21 +60,14 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="editor">Description <span
                                         style="color: red;">*</span></label>
-                                        <div class="col-sm-10">
-                                            <div id="toolbar-container"></div>
-                                            <div id="editor" class="form-control">{!! $blog->description ?? '' !!}</div>
-                                            <textarea 
-                                                id="editor-content" 
-                                                name="description" 
-                                                class="d-none" 
-                                                required
-                                                tabindex="-1"
-                                                placeholder="Enter Description"
-                                            >{!! $blog->description ?? '' !!}</textarea>
-                                            <div id="description-error" class="invalid-feedback" style="display: none;">
-                                                This field is required.
-                                            </div>
-                                        </div>
+                                <div class="col-sm-10">
+                                    <div id="toolbar-container"></div>
+                                    <div id="editor" class="form-control">{!! $blog->description ?? '' !!}</div>
+                                    <textarea id="editor-content" name="description" class="d-none" required tabindex="-1" placeholder="Enter Description">{!! $blog->description ?? '' !!}</textarea>
+                                    <div id="description-error" class="invalid-feedback" style="display: none;">
+                                        This field is required.
+                                    </div>
+                                </div>
                             </div>
 
                             @if (isset($blog))

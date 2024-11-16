@@ -43,14 +43,6 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="basic-default-description">Description</label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" id="basic-default-description" rows="3" placeholder="Enter Description"
-                                        name="description">{{ old('description', $aboutUs->description ?? '') }}</textarea>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="basic-default-mission">Mission</label>
                                 <div class="col-sm-10">
                                     <textarea class="form-control" id="basic-default-mission" rows="3" placeholder="Enter Mission" name="mission">{{ old('mission', $aboutUs->mission ?? '') }}</textarea>
@@ -65,13 +57,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-10">
-                            <button type="submit" class="btn btn-primary btn-sm">
-                                {{ isset($banner) ? 'Update' : 'Submit' }}
-                            </button>
-                        </div>
-                    </div>
                 </div>
                 <div class="col-md-5">
                     <div class="card mb-4">
@@ -84,7 +69,7 @@
                                     <div class="d-flex align-items-center">
                                         <input type="text" class="form-control"
                                             name="advantages[{{ $key }}][icon]" value="{{ $advantage->icon }}"
-                                            placeholder="Icon">
+                                            placeholder="Icon Class. ex: fas fa-home">
                                         <input type="text" class="form-control flex-grow-1 mx-2"
                                             name="advantages[{{ $key }}][title]" value="{{ $advantage->title }}"
                                             placeholder="Title">
@@ -95,6 +80,32 @@
                             </div>
                             <button type="button" class="btn btn-primary btn-sm mt-3" onclick="addAdvantage()">Add
                                 Advantage</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="editor">Description <span
+                                        style="color: red;">*</span></label>
+                                <div class="col-sm-10">
+                                    <div id="toolbar-container"></div>
+                                    <div id="editor" class="form-control">{!! $aboutUs->description ?? '' !!}</div>
+                                    <textarea id="editor-content" name="description" class="d-none" required tabindex="-1"
+                                        placeholder="Enter Description">{!! $aboutUs->description ?? '' !!}</textarea>
+                                    <div id="description-error" class="invalid-feedback" style="display: none;">
+                                        This field is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-10 mt-3">
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                {{ isset($banner) ? 'Update' : 'Submit' }}
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -133,7 +144,7 @@
             const div = document.createElement('div');
             div.innerHTML = `
                 <div class="d-flex align-items-center">
-                    <input type="text" class="form-control" name="advantages[${index}][icon]" placeholder="Icon">
+                    <input type="text" class="form-control" name="advantages[${index}][icon]" placeholder="Icon Class. ex: fas fa-home">
                     <input type="text" class="form-control flex-grow-1 mx-2" name="advantages[${index}][title]" placeholder="Title">
                     <button type="button" class="btn btn-outline-danger btn-sm delete-advantage">Delete</button>
                 </div>
