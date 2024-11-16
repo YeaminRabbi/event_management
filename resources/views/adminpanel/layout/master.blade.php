@@ -7,7 +7,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>{{ config('app.name') }} @yield('page')</title>
+    <title>{{ config('app.name') }} | Adminpanel</title>
 
     <meta name="description" content="" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -134,7 +134,7 @@
     <!-- CKEditor CDN -->
     <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/decoupled-document/ckeditor.js"></script>
 
-    <script>
+    {{-- <script>
         let editor;
 
         DecoupledEditor
@@ -242,7 +242,7 @@
                 localStorage.removeItem('editorContent'); // Clear autosaved content
             }
         });
-    </script>
+    </script> --}}
 
     @yield('js')
     @stack('scripts')

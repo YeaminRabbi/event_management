@@ -77,6 +77,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::resource('blog', BlogController::class);
     Route::put('/blog/{blog}/toggle-status', [BlogController::class, 'toggleStatus']);
 
+    // FAQ Routes
+    Route::resource('faq', FAQController::class);
+    Route::put('/faq/{faq}/toggle-status', [FAQController::class, 'toggleStatus']);
+
     // Settings routes
     Route::resource('settings', SettingsController::class);
 });
