@@ -134,7 +134,7 @@
     <!-- CKEditor CDN -->
     <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/decoupled-document/ckeditor.js"></script>
 
-    {{-- <script>
+    <script>
         let editor;
 
         DecoupledEditor
@@ -242,7 +242,7 @@
                 localStorage.removeItem('editorContent'); // Clear autosaved content
             }
         });
-    </script> --}}
+    </script>
 
     @yield('js')
     @stack('scripts')

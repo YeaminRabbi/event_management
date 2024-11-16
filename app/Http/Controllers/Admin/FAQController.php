@@ -83,15 +83,15 @@ class FAQController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(FAQ $fAQ)
+    public function edit(FAQ $faq)
     {
-        return view('adminpanel.faq.create_edit', compact('fAQ'));
+        return view('adminpanel.faq.create_edit', compact('faq'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, FAQ $fAQ)
+    public function update(Request $request, FAQ $faq)
     {
         $request->validate([
             'question' => 'required',
@@ -99,7 +99,7 @@ class FAQController extends Controller
             'status' => 'required',
         ]);
 
-        $fAQ->update([
+        $faq->update([
             'question' => $request->question,
             'answer' => $request->answer,
             'status' => $request->status,
@@ -115,9 +115,9 @@ class FAQController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(FAQ $fAQ)
+    public function destroy(FAQ $faq)
     {
-        $fAQ->delete();
+        $faq->delete();
 
         flash()
             ->option('position', 'bottom-right')
