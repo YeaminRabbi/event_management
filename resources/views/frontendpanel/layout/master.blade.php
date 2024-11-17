@@ -38,7 +38,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('frontendpanel/assets/css/style.css') }}">
 
     <style>
-
         #preloader {
             top: 0;
             left: 0;
@@ -157,7 +156,7 @@
 </head>
 
 
-<body>
+<body @if (Route::currentRouteName() != 'home') class="default-header-p" @endif>
     <!-- backtotop - start -->
     <div id="thetop" class="thetop"></div>
     <div class='backtotop'>
@@ -196,8 +195,18 @@
     <!-- header-section - start
   ================================================== -->
     @include('frontendpanel.layout.header')
+
+    @include('frontendpanel.layout.mobile-header')
     <!-- header-section - end
   ================================================== -->
+
+    @if (!in_array(request()->route()->getName(), ['home']))
+        <!-- breadcrumb-section - start
+    ================================================== -->
+        @include('frontendpanel.layout.breadcrumb')
+        <!-- breadcrumb-section - end
+    ================================================== -->
+    @endif
 
     @yield('content')
 

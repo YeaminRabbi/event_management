@@ -64,4 +64,10 @@ class FrontendController extends Controller
 
         return redirect()->back();
     }
+
+    public function aboutUs()
+    {
+        $aboutUs = AboutUs::with('advantages')->first();
+        return view('frontendpanel.about_us.about_us', compact('aboutUs'));
+    }
 }
