@@ -24,108 +24,23 @@
                                 <div class="menu-item-list ul-li clearfix">
                                     <ul>
                                         <li class="menu-item-has-children active">
-                                            <a href="#!">home</a>
-                                            <ul class="sub-menu">
-                                                <li class="menu-item-has-children">
-                                                    <a href='index-1.html' class="active">home v.1</a>
-                                                    <ul class="sub-menu">
-                                                        <li>
-                                                            <a href='#'>example v.1.1</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href='#'>example v.1.2</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href='#'>example v.1.3</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href='#'>example v.1.4</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li class="menu-item-has-children">
-                                                    <a href='index-2.html'>home v.2</a>
-                                                    <ul class="sub-menu">
-                                                        <li>
-                                                            <a href='#'>example v.2.1</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href='#'>example v.2.2</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href='#'>example v.2.3</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li class="menu-item-has-children">
-                                                    <a href='index-3.html'>home v.3</a>
-                                                    <ul class="sub-menu">
-                                                        <li>
-                                                            <a href='#'>example v.3.1</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href='#'>example v.3.2</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li class="menu-item-has-children">
-                                                    <a href='index-4.html'>home v.4</a>
-                                                    <ul class="sub-menu">
-                                                        <li>
-                                                            <a href='#'>example v.4.1</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
+                                            <a href="{{ route('home') }}">home</a>
+                                            
                                         </li>
                                         <li class="menu-item-has-children">
-                                            <a href="#!">about</a>
-                                            <ul class="sub-menu">
-                                                <li><a href="about.html">about us</a></li>
-                                                <li><a href='service.html'>service</a></li>
-                                                <li><a href='faq.html'>FAQ</a></li>
-                                            </ul>
+                                            <a href="#">about</a>
                                         </li>
                                         <li class="menu-item-has-children">
                                             <a href="#!">events</a>
-                                            <ul class="sub-menu">
-                                                <li class="menu-item-has-children">
-                                                    <a href='event-1.html'>event List</a>
-                                                    <ul class="sub-menu">
-                                                        <li><a href="event-1-without-sidebar.html">list without
-                                                                sidebar</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="menu-item-has-children">
-                                                    <a href='event-2.html'>event Grid</a>
-                                                    <ul class="sub-menu">
-                                                        <li><a href="event-2-without-sidebar.html">grid without
-                                                                sidebar</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href='event-details.html'>event details</a></li>
-                                                <li><a href='booking.html'>event booking</a></li>
-                                            </ul>
                                         </li>
                                         <li class="menu-item-has-children">
                                             <a href="#!">blogs</a>
-                                            <ul class="sub-menu">
-                                                <li><a href='blog.html'>blog</a></li>
-                                                <li><a href='blog-details.html'>blog details</a></li>
-                                            </ul>
                                         </li>
                                         <li>
                                             <a href="gallery.html">gallery</a>
                                         </li>
-                                        <li>
-                                            <a href="speaker.html">speaker</a>
-                                        </li>
                                         <li class="menu-item-has-children">
                                             <a href="#!">contact</a>
-                                            <ul class="sub-menu">
-                                                <li><a href="contact.html">contact us</a></li>
-                                                <li><a href='404-error.html'>404 Error</a></li>
-                                            </ul>
                                         </li>
                                     </ul>
                                 </div>
@@ -140,15 +55,15 @@
                                             <a href="#login-modal" class="login-modal-btn">
                                                 <i class="fas fa-user"></i>
                                             </a>
-                                            {{-- <div id="login-modal" class="reglog-modal-wrapper mfp-hide clearfix"
-                                                style="background-image: url(assets/images/login-modal-bg.jpg);">
+                                            <div id="login-modal" class="reglog-modal-wrapper mfp-hide clearfix"
+                                                style="background-image: url('{{ asset('frontendpanel/assets/images/login-modal-bg.jpg') }}');">
                                                 <div class="overlay-black clearfix">
 
                                                     <!-- leftside-content - start -->
                                                     <div class="leftside-content">
                                                         <div class="site-logo-wrapper mb-80">
                                                             <a href="#!" class="logo">
-                                                                <img src="assets/images/2.site-logo.png"
+                                                                <img src="{{ asset(\App\Helpers\Frontend::Settings('website', 'logo')) }}"
                                                                     alt="logo_not_found">
                                                             </a>
                                                         </div>
@@ -160,10 +75,9 @@
                                                             </ul>
                                                         </div>
                                                         <div class="copyright-text">
-                                                            <p class="m-0">©2019 <a href="#!"
-                                                                    class="yellow-color">Harmoni.com</a> all right
-                                                                reserved, made with <i class="fas fa-heart"></i> by
-                                                                jThemes Studio </p>
+                                                            <span class="m-0">© <a href="#!" class="site-link">Event Management</a> all right
+                                                                reserved, made with <i class="fas fa-heart"></i> by <a href="http://techstringit.com/" target="_blank"
+                                                                    class="author-link"><strong>Techstring IT</strong></a> {{ date('Y') }}.</span>
                                                         </div>
                                                     </div>
                                                     <!-- leftside-content - end -->
@@ -221,28 +135,8 @@
                                                     </a>
 
                                                 </div>
-                                            </div> --}}
-                                        </li>
-                                        {{-- <li>
-                                            <button type="button" class="toggle-overlay search-btn">
-                                                <i class="fas fa-search"></i>
-                                            </button>
-                                            <!-- search-body - start -->
-                                            <div class="search-body">
-                                                <div class="search-form">
-                                                    <form action="#">
-                                                        <input class="search-input" type="search"
-                                                            placeholder="Search Here">
-                                                        <div class="outer-close toggle-overlay">
-                                                            <button type="button" class="search-close">
-                                                                <i class="fas fa-times"></i>
-                                                            </button>
-                                                        </div>
-                                                    </form>
-                                                </div>
                                             </div>
-                                            <!-- search-body - end -->
-                                        </li> --}}
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -290,152 +184,43 @@
                 </a>
             </div>
 
-            <!-- sidebar-form - start -->
-            <div class="sidebar-form">
-                <form action="#">
-                    <input id="altmenu-sidebar-search" type="search" placeholder="Search">
-                    <label for="altmenu-sidebar-search"><i class="fas fa-search"></i></label>
-                </form>
-            </div>
-            <!-- sidebar-form - end -->
-
             <!-- main-pages-links - start -->
             <div class="menu-link-list main-pages-links">
-                <h2 class="menu-title">all home pages</h2>
+                <h2 class="menu-title">Menu</h2>
                 <ul>
                     <li class="active">
                         <a href="index-1.html">
                             <span class="icon"><i class="fas fa-home"></i></span>
-                            Home V.1
+                            Home
                         </a>
                     </li>
                     <li>
-                        <a href="index-2.html">
-                            <span class="icon"><i class="fas fa-home"></i></span>
-                            Home V.2
+                        <a href="about.html">
+                            <span class="icon"><i class="fas fa-info"></i></span>
+                            About Us
                         </a>
                     </li>
                     <li>
                         <a href="index-3.html">
-                            <span class="icon"><i class="fas fa-home"></i></span>
-                            Home v.3
+                            <span class="icon"><i class="fas fa-calendar-alt"></i></span>
+                            Event
                         </a>
                     </li>
                     <li>
                         <a href="index-4.html">
-                            <span class="icon"><i class="fas fa-home"></i></span>
-                            Home v.4
+                            <span class="icon"><i class="fas fa-edit"></i></span>
+                            Blogs
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index-4.html">
+                            <span class="icon"><i class="fas fa-images"></i></span>
+                            Gallery
                         </a>
                     </li>
                 </ul>
             </div>
             <!-- main-pages-links - end -->
-
-            <!-- other-pages-links - start -->
-            <div class="menu-link-list other-pages-links">
-                <h2 class="menu-title">all single pages</h2>
-                <ul>
-                    <li>
-                        <a href="about.html">
-                            <span class="icon"><i class="fas fa-home"></i></span>
-                            About Us
-                        </a>
-                    </li>
-                    <li>
-                        <a href="service.html">
-                            <span class="icon"><i class="fas fa-home"></i></span>
-                            our Services
-                        </a>
-                    </li>
-                    <li>
-                        <a href="event-1.html">
-                            <span class="icon"><i class="fas fa-home"></i></span>
-                            event list
-                        </a>
-                    </li>
-                    <li>
-                        <a href="event-2.html">
-                            <span class="icon"><i class="fas fa-home"></i></span>
-                            event grid
-                        </a>
-                    </li>
-                    <li>
-                        <a href="event-1-without-sidebar.html">
-                            <span class="icon"><i class="fas fa-home"></i></span>
-                            list without sidebar
-                        </a>
-                    </li>
-                    <li>
-                        <a href="event-2-without-sidebar.html">
-                            <span class="icon"><i class="fas fa-home"></i></span>
-                            grid without sidebar
-                        </a>
-                    </li>
-                    <li>
-                        <a href="blog.html">
-                            <span class="icon"><i class="fas fa-home"></i></span>
-                            Latest blogs
-                        </a>
-                    </li>
-                    <li>
-                        <a href="gallery.html">
-                            <span class="icon"><i class="fas fa-home"></i></span>
-                            our gallery
-                        </a>
-                    </li>
-                    <li>
-                        <a href="speaker.html">
-                            <span class="icon"><i class="fas fa-home"></i></span>
-                            event speakers
-                        </a>
-                    </li>
-                    <li>
-                        <a href="contact.html">
-                            <span class="icon"><i class="fas fa-home"></i></span>
-                            contact us
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <!-- other-pages-links - end -->
-
-            <!-- inner-pages-links - start -->
-            <div class="menu-link-list inner-pages-links">
-                <h2 class="menu-title">all inner pages</h2>
-                <ul>
-                    <li>
-                        <a href="booking.html">
-                            <span class="icon"><i class="fas fa-home"></i></span>
-                            event booking
-                        </a>
-                    </li>
-                    <li>
-                        <a href="event-details.html">
-                            <span class="icon"><i class="fas fa-home"></i></span>
-                            event details
-                        </a>
-                    </li>
-                    <li>
-                        <a href='blog-details.html'>
-                            <span class="icon"><i class="fas fa-home"></i></span>
-                            blog details
-                        </a>
-                    </li>
-                    <li>
-                        <a href="faq.html">
-                            <span class="icon"><i class="fas fa-home"></i></span>
-                            Frequently Ask Qusetion
-                        </a>
-                    </li>
-                    <li>
-                        <a href="404-error.html">
-                            <span class="icon"><i class="fas fa-home"></i></span>
-                            404 error
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <!-- inner-pages-links - end -->
 
             <!-- login-btn-group - start -->
             <div class="login-btn-group">
@@ -446,7 +231,7 @@
                             Register
                         </a>
                         <div id="alt-register-modal" class="reglog-modal-wrapper register-modal mfp-hide clearfix"
-                            style="background-image: url(assets/images/login-modal-bg.jpg);">
+                            style="background-image: url({{ asset('frontendpanel/assets/images/login-modal-bg.jpg') }});">
                             <div class="overlay-black clearfix">
 
                                 <!-- leftside-content - start -->
@@ -463,9 +248,9 @@
                                         </ul>
                                     </div>
                                     <div class="copyright-text">
-                                        <p class="m-0">©2019 <a href="#!"
-                                                class="yellow-color">Harmoni.com</a> all right reserved, made with
-                                            <i class="fas fa-heart"></i> by jThemes Studio </p>
+                                        <span class="m-0">© <a href="#!" class="site-link">Event Management</a> all right
+                                            reserved, made with <i class="fas fa-heart"></i> by <a href="http://techstringit.com/" target="_blank"
+                                                class="author-link"><strong>Techstring IT</strong></a> {{ date('Y') }}.</span>
                                     </div>
                                 </div>
                                 <!-- leftside-content - end -->
@@ -480,7 +265,7 @@
                                                 NOW</strong></span>
                                     </div>
 
-                                    {{-- <div class="login-form text-center mb-50">
+                                    <div class="login-form text-center mb-50">
                                         <form action="#!">
                                             <div class="form-item">
                                                 <input type="email" placeholder="User Name">
@@ -497,14 +282,14 @@
                                             <div class="human-verification text-left">
                                                 <input type="checkbox" id="alt-imnotarobot">
                                                 <label for="alt-imnotarobot">I'm not a robot</label>
-                                                <span class="verification-image">
-                                                    <img src="assets/images/iamnotrobot.png"
+                                                <span class="verification-image"> frontendpanel/assets
+                                                    <img src="{{ asset('frontendpanel/assets/images/iamnotrobot.png') }}" 
                                                         alt="Image_not_found">
                                                 </span>
                                             </div>
                                             <button type="submit" class="login-btn">login now</button>
                                         </form>
-                                    </div> --}}
+                                    </div>
 
                                     <div class="bottom-text white-color">
                                         <p class="m-0">
@@ -528,7 +313,7 @@
                             Login
                         </a>
                         <div id="alt-login-modal" class="reglog-modal-wrapper mfp-hide clearfix"
-                            style="background-image: url(assets/images/login-modal-bg.jpg);">
+                            style="background-image: url({{ asset('frontendpanel/assets/images/login-modal-bg.jpg') }});">
                             <div class="overlay-black clearfix">
 
                                 <!-- leftside-content - start -->

@@ -7,7 +7,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <title>{{ config('app.name') }} | @yield('title')</title>
-    <link rel="shortcut icon" href="{{ asset('images/logo/favicon.png') }}">
+    <link rel="shortcut icon" href="{{ asset('frontendpanel/assets/images/logo/favicon.png') }}">
 
     <!-- fraimwork - css include -->
     <link rel="stylesheet" type="text/css" href="{{ asset('frontendpanel/assets/css/bootstrap.min.css') }}">

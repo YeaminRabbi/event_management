@@ -12,54 +12,83 @@
                         <!-- site-logo-wrapper - start -->
                         <div class="site-logo-wrapper mb-30">
                             <a href="index-1.html" class="logo">
-                                <img src="{{ asset(\App\Helpers\Frontend::Settings('website', 'logo')) }}" alt="logo_not_found">
+                                <img src="{{ asset(\App\Helpers\Frontend::Settings('website', 'logo')) }}"
+                                    alt="logo_not_found">
                             </a>
                         </div>
                         <!-- site-logo-wrapper - end -->
 
-                        <p class="mb-30">
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
-                            tincidunt ut laoreet dolore magna.
-                        </p>
-
                         <!-- basic-info - start -->
                         <div class="basic-info ul-li-block mb-50">
                             <ul>
-                                <li>
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    100 highland ave, california, united state
-                                </li>
-                                <li>
-                                    <i class="fas fa-envelope"></i>
-                                    <a href="#!">contact@pantero.com</a>
-                                </li>
-                                <li>
-                                    <i class="fas fa-phone"></i>
-                                    <a href="#!">100 800 1234 5555</a>
-                                </li>
+                                @if (\App\Helpers\Frontend::Settings('website', 'location'))
+                                    <li>
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        {{ \App\Helpers\Frontend::Settings('website', 'location') }}
+                                    </li>
+                                @endif
+                                @if (\App\Helpers\Frontend::Settings('website', 'email'))
+                                    <li>
+                                        <i class="fas fa-envelope"></i>
+                                        <a
+                                            href="mailto:{{ \App\Helpers\Frontend::Settings('website', 'email') }}">{{ \App\Helpers\Frontend::Settings('website', 'email') }}</a>
+                                    </li>
+                                @endif
+                                @if (\App\Helpers\Frontend::Settings('website', 'phone'))
+                                    <li>
+                                        <i class="fas fa-phone"></i>
+                                        <a
+                                            href="tel:{{ \App\Helpers\Frontend::Settings('website', 'phone') }}">{{ \App\Helpers\Frontend::Settings('website', 'phone') }}</a>
+                                    </li>
+                                @endif
                             </ul>
                         </div>
                         <!-- basic-info - end -->
 
                         <!-- social-links - start -->
                         <div class="social-links ul-li">
-                            <h3 class="social-title">network</h3>
+                            <h3 class="social-title">Social Media</h3>
                             <ul>
-                                <li>
-                                    <a href="#!"><i class="fab fa-facebook-f"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#!"><i class="fab fa-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#!"><i class="fab fa-twitch"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#!"><i class="fab fa-google-plus-g"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#!"><i class="fab fa-instagram"></i></a>
-                                </li>
+                                @if (\App\Helpers\Frontend::Settings('social', 'facebook'))
+                                    <li><a href="{{ \App\Helpers\Frontend::Settings('social', 'facebook') }}"
+                                            target="_blank" title="Facebook">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </a>
+                                    </li>
+                                @endif
+                                @if (\App\Helpers\Frontend::Settings('social', 'instagram'))
+                                    <li><a href="{{ \App\Helpers\Frontend::Settings('social', 'instagram') }}"
+                                            target="_blank" title="Instagram"><i class="fa fa-instagram"></i></a></li>
+                                @endif
+                                @if (\App\Helpers\Frontend::Settings('social', 'whatsapp'))
+                                    <li><a href="{{ \App\Helpers\Frontend::Settings('social', 'whatsapp') }}"
+                                            target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a></li>
+                                @endif
+                                @if (\App\Helpers\Frontend::Settings('social', 'youtube'))
+                                    <li><a href="{{ \App\Helpers\Frontend::Settings('social', 'youtube') }}"
+                                            target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a></li>
+                                @endif
+                                @if (\App\Helpers\Frontend::Settings('social', 'linkedin'))
+                                    <li><a href="{{ \App\Helpers\Frontend::Settings('social', 'linkedin') }}"
+                                            target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                                    </li>
+                                @endif
+                                @if (\App\Helpers\Frontend::Settings('social', 'x'))
+                                    <li><a href="{{ \App\Helpers\Frontend::Settings('social', 'x') }}"
+                                            target="_blank" title="X"><i class="fab fa-twitter"></i></a>
+                                    </li>
+                                @endif
+                                @if (\App\Helpers\Frontend::Settings('social', 'twitch'))
+                                    <li><a href="{{ \App\Helpers\Frontend::Settings('social', 'twitch') }}"
+                                            target="_blank" title="Twitch"><i class="fab fa-twitch"></i></a>
+                                    </li>
+                                @endif
+                                @if (\App\Helpers\Frontend::Settings('social', 'x'))
+                                    <li><a href="{{ \App\Helpers\Frontend::Settings('social', 'google-plus') }}"
+                                            target="_blank" title="Google Plus"><i class="fab fa-google-plus-g"></i></a>
+                                    </li>
+                                @endif
+
                             </ul>
                         </div>
                         <!-- social-links - end -->
@@ -68,6 +97,9 @@
                 </div>
                 <!-- about-wrapper - end -->
 
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                </div>
+
                 <!-- usefullinks-wrapper - start -->
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="usefullinks-wrapper ul-li-block">
@@ -75,59 +107,16 @@
                             useful <strong>links</strong>
                         </h3>
                         <ul>
-                            <li><a href="#!">About Harmoni</a></li>
-                            <li><a href="#!">Disclaimer</a></li>
-                            <li><a href="#!">Contact us</a></li>
-                            <li><a href="#!">Events Schedule</a></li>
-                            <li><a href="#!">Sponsors</a></li>
-                            <li><a href="#!">Venues</a></li>
-                            <li><a href="#!">Tickets</a></li>
-                            <li><a href="#!">Pricing Plans</a></li>
+                            <li><a href="{{ route('home') }}">Home</a></li>
+                            <li><a href="">Event</a></li>
+                            <li><a href="">Blogs</a></li>
+                            <li><a href="">Gallery</a></li>
+
                         </ul>
 
                     </div>
                 </div>
                 <!-- usefullinks-wrapper - end -->
-
-                <!-- instagram-wrapper - start -->
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="instagram-wrapper ul-li">
-                        <h3 class="footer-item-title">
-                            harmoni <strong>instagram</strong>
-                        </h3>
-                        {{-- <ul>
-                            <li class="image-wrapper">
-                                <img src="assets/images/footer/instagram/img1.png" alt="Image_not_found">
-                                <a href="#!"><i class="fab fa-instagram"></i></a>
-                            </li>
-                            <li class="image-wrapper">
-                                <img src="assets/images/footer/instagram/img2.png" alt="Image_not_found">
-                                <a href="#!"><i class="fab fa-instagram"></i></a>
-                            </li>
-                            <li class="image-wrapper">
-                                <img src="assets/images/footer/instagram/img3.png" alt="Image_not_found">
-                                <a href="#!"><i class="fab fa-instagram"></i></a>
-                            </li>
-                            <li class="image-wrapper">
-                                <img src="assets/images/footer/instagram/img4.png" alt="Image_not_found">
-                                <a href="#!"><i class="fab fa-instagram"></i></a>
-                            </li>
-                            <li class="image-wrapper">
-                                <img src="assets/images/footer/instagram/img5.png" alt="Image_not_found">
-                                <a href="#!"><i class="fab fa-instagram"></i></a>
-                            </li>
-                            <li class="image-wrapper">
-                                <img src="assets/images/footer/instagram/img6.png" alt="Image_not_found">
-                                <a href="#!"><i class="fab fa-instagram"></i></a>
-                            </li>
-                        </ul> --}}
-                        <h4 class="followus-link">
-                            Follow Our Instagram <a href="#!">#Harmoni</a>
-                        </h4>
-                    </div>
-                </div>
-                <!-- instagram-wrapper - end -->
-
             </div>
         </div>
     </div>
@@ -140,9 +129,9 @@
                 <!-- copyright-text - start -->
                 <div class="col-lg-7 col-md-12 col-sm-12">
                     <div class="copyright-text">
-                        <p class="m-0">©2018 <a href="#!" class="site-link">Harmoni.com</a> all right
-                            reserved, made with <i class="fas fa-heart"></i> by <a href="#!"
-                                class="author-link"><strong>jThemes Studio</strong></a></p>
+                        <span class="m-0">© <a href="#!" class="site-link">Event Management</a> all right
+                            reserved, made with <i class="fas fa-heart"></i> by <a href="http://techstringit.com/" target="_blank"
+                                class="author-link"><strong>Techstring IT</strong></a> {{ date('Y') }}.</span>
                     </div>
                 </div>
                 <!-- copyright-text - end -->
@@ -151,9 +140,8 @@
                 <div class="col-lg-5 col-md-12 col-sm-12">
                     <div class="footer-menu">
                         <ul>
-                            <li><a href="contact.html">Contact us</a></li>
-                            <li><a href="about.html">About us</a></li>
-                            <li><a href="#!">Site map</a></li>
+                            <li><a href="#!">Contact us</a></li>
+                            <li><a href="#!">About us</a></li>
                             <li><a href="#!">Privacy policy</a></li>
                         </ul>
                     </div>
