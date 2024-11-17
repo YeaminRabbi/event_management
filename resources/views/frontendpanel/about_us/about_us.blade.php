@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- our-management-section - start
-                          ================================================== -->
+                                      ================================================== -->
     <section id="our-management-section" class="our-management-section bg-gray-light sec-ptb-100 clearfix">
         <div class="container">
             <div class="row">
@@ -61,14 +61,14 @@
         </div>
     </section>
     <!-- our-management-section - end
-                          ================================================== -->
+                                      ================================================== -->
 
 
 
 
 
     <!-- award-section - start
-                          ================================================== -->
+                                      ================================================== -->
     <section id="award-section" class="award-section sec-ptb-100 clearfix">
         <div class="container">
             <div class="row">
@@ -83,14 +83,14 @@
         </div>
     </section>
     <!-- award-section - end
-                          ================================================== -->
+                                      ================================================== -->
 
 
 
 
 
     <!-- service-section - start
-                          ================================================== -->
+                                      ================================================== -->
     @if (isset($aboutUs->advantages) && count($aboutUs->advantages) > 0)
         <section id="service-section" class="service-section sec-ptb-100 bg-gray-light clearfix">
             <div class="container">
@@ -137,6 +137,49 @@
         </section>
     @endif
     <!-- service-section - end
-                          ================================================== -->
+                                      ================================================== -->
 
+
+    @if (isset($faqs) && count($faqs) > 0)
+        <section id="faq-section" class="faq-section sec-ptb-100 clearfix">
+            <div class="container">
+                <div class="faq-content-wrapper mb-80">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <!-- section-title - start -->
+                            <div class="section-title mb-30">
+                                <span class="line-style"></span>
+                                <small class="sub-title">find your answer</small>
+                                <h2 class="big-title">ask & <strong>questions</strong></h2>
+                            </div>
+                            <!-- section-title - end -->
+                            <div id="faq-accordion" class="faq-accordion">
+
+                                @foreach ($faqs as $faq)
+                                    <div class="card">
+                                        <div class="card-header" id="heading{{ $faq->id }}">
+                                            <button class="btn collapsed" data-toggle="collapse"
+                                                data-target="#collapse{{ $faq->id }}" aria-expanded="true"
+                                                aria-controls="collapse{{ $faq->id }}">
+                                                <span>0{{ $loop->iteration }}.</span> {{ $faq->question }}
+                                            </button>
+                                        </div>
+
+                                        <div id="collapse{{ $faq->id }}" class="collapse"
+                                            aria-labelledby="heading{{ $faq->id }}" data-parent="#faq-accordion">
+                                            <div class="card-body">
+                                                <h3>answer</h3>
+                                                {{ $faq->answer }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    @endif
 @endsection
