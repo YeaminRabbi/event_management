@@ -418,21 +418,6 @@
                                             </a>
                                         </div>
                                     </div>
-                                    {{-- <div class="card">
-                                        <div class="card-header" id="headingfour">
-                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour">
-                                                Consectuerer set diam?
-                                            </button>
-                                        </div>
-                                        <div id="collapsefour" class="collapse" aria-labelledby="headingfour" data-parent="#faq-accordion">
-                                            <div class="card-body">
-                                                Lorem ipsum dollor site amet the best  consectuer diam nerd adipiscing elites sed diam nonummy nibh the ebest uismod tincidunt ut laoreet dolore.
-                                            </div>
-                                            <a href="#!" class="tickets-details-btn float-right">
-                                                Read More
-                                            </a>
-                                        </div>
-                                    </div> --}}
                                 @endforeach
                             </div>
                         </div>
