@@ -139,7 +139,6 @@ class FrontendController extends Controller
 
     public function blog_details($slug)
     {
-        // return
         $blog = Blog::with('image')->where('slug', $slug)->first();
 
         $recent_blogs = Blog::where('status', true)
@@ -148,5 +147,10 @@ class FrontendController extends Controller
             ->get();
 
         return view('frontendpanel.blogs.blog-details', compact('blog', 'recent_blogs'));
+    }
+
+    public function contact()
+    {
+        return view('frontendpanel.contact.contact');
     }
 }
