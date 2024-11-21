@@ -31,31 +31,31 @@
                 <h2 class="menu-title">Menu</h2>
                 <ul>
                     <li class="active">
-                        <a href="index-1.html">
+                        <a href="{{ route('home') }}">
                             <span class="icon"><i class="fas fa-home"></i></span>
                             Home
                         </a>
                     </li>
                     <li>
-                        <a href="about.html">
+                        <a href="{{ route('about-us') }}">
                             <span class="icon"><i class="fas fa-info"></i></span>
                             About Us
                         </a>
                     </li>
                     <li>
-                        <a href="index-3.html">
+                        <a href="{{ route('events') }}">
                             <span class="icon"><i class="fas fa-calendar-alt"></i></span>
                             Event
                         </a>
                     </li>
                     <li>
-                        <a href="index-4.html">
+                        <a href="{{ route('blogs') }}">
                             <span class="icon"><i class="fas fa-edit"></i></span>
                             Blogs
                         </a>
                     </li>
                     <li>
-                        <a href="index-4.html">
+                        <a href="{{ route('home') }}#event-gallery-section">
                             <span class="icon"><i class="fas fa-images"></i></span>
                             Gallery
                         </a>
@@ -250,31 +250,56 @@
                 <div class="mb-15">
                     <h3 class="contact-info">
                         <i class="fas fa-phone"></i>
-                        100-2222-9999
+                        <a href="tel:{{ \App\Helpers\Frontend::Settings('website', 'phone') }}">{{ \App\Helpers\Frontend::Settings('website', 'phone') }}</a>
                     </h3>
                     <h3 class="contact-info">
                         <i class="fas fa-envelope"></i>
-                        info@harmoni.com
+                        <a href="mailto:{{ \App\Helpers\Frontend::Settings('website', 'email') }}">{{ \App\Helpers\Frontend::Settings('website', 'email') }}</a>
                     </h3>
                 </div>
                 <ul>
-                    <li>
-                        <a href="#!"><i class="fab fa-facebook-f"></i></a>
-                    </li>
-                    <li>
-                        <a href="#!"><i class="fab fa-twitter"></i></a>
-                    </li>
-                    <li>
-                        <a href="#!"><i class="fab fa-twitch"></i></a>
-                    </li>
-                    <li>
-                        <a href="#!"><i class="fab fa-google-plus-g"></i></a>
-                    </li>
-                    <li>
-                        <a href="#!"><i class="fab fa-instagram"></i></a>
-                    </li>
+                    @if (\App\Helpers\Frontend::Settings('social', 'facebook'))
+                        <li><a href="{{ \App\Helpers\Frontend::Settings('social', 'facebook') }}"
+                                target="_blank" title="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                        </li>
+                    @endif
+                    @if (\App\Helpers\Frontend::Settings('social', 'instagram'))
+                        <li><a href="{{ \App\Helpers\Frontend::Settings('social', 'instagram') }}"
+                                target="_blank" title="Instagram"><i class="fa fa-instagram"></i></a></li>
+                    @endif
+                    @if (\App\Helpers\Frontend::Settings('social', 'whatsapp'))
+                        <li><a href="{{ \App\Helpers\Frontend::Settings('social', 'whatsapp') }}"
+                                target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a></li>
+                    @endif
+                    @if (\App\Helpers\Frontend::Settings('social', 'youtube'))
+                        <li><a href="{{ \App\Helpers\Frontend::Settings('social', 'youtube') }}"
+                                target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a></li>
+                    @endif
+                    @if (\App\Helpers\Frontend::Settings('social', 'linkedin'))
+                        <li><a href="{{ \App\Helpers\Frontend::Settings('social', 'linkedin') }}"
+                                target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </li>
+                    @endif
+                    @if (\App\Helpers\Frontend::Settings('social', 'x'))
+                        <li><a href="{{ \App\Helpers\Frontend::Settings('social', 'x') }}"
+                                target="_blank" title="X"><i class="fab fa-twitter"></i></a>
+                        </li>
+                    @endif
+                    @if (\App\Helpers\Frontend::Settings('social', 'twitch'))
+                        <li><a href="{{ \App\Helpers\Frontend::Settings('social', 'twitch') }}"
+                                target="_blank" title="Twitch"><i class="fab fa-twitch"></i></a>
+                        </li>
+                    @endif
+                    @if (\App\Helpers\Frontend::Settings('social', 'x'))
+                        <li><a href="{{ \App\Helpers\Frontend::Settings('social', 'google-plus') }}"
+                                target="_blank" title="Google Plus"><i class="fab fa-google-plus-g"></i></a>
+                        </li>
+                    @endif
+
                 </ul>
-                <a href="contact.html" class="contact-btn">contact us</a>
+                <a href="{{ route('contact') }}" class="contact-btn">contact us</a>
             </div>
             <!-- social-links - end -->
 

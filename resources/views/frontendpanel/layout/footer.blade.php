@@ -108,9 +108,9 @@
                         </h3>
                         <ul>
                             <li><a href="{{ route('home') }}">Home</a></li>
-                            <li><a href="">Event</a></li>
-                            <li><a href="">Blogs</a></li>
-                            <li><a href="">Gallery</a></li>
+                            <li><a href="{{ route('events') }}">Event</a></li>
+                            <li><a href="{{ route('blogs') }}">Blogs</a></li>
+                            <li><a href="{{ route('home') }}#event-gallery-section">Gallery</a></li>
 
                         </ul>
 
@@ -129,7 +129,7 @@
                 <!-- copyright-text - start -->
                 <div class="col-lg-7 col-md-12 col-sm-12">
                     <div class="copyright-text">
-                        <span class="m-0">© <a href="#!" class="site-link">Event Management</a> all right
+                        <span class="m-0">© <a href="#!" class="site-link">{{ config('app.name') }}</a> all right
                             reserved, made with <i class="fas fa-heart"></i> by <a href="http://techstringit.com/" target="_blank"
                                 class="author-link"><strong>Techstring IT</strong></a> {{ date('Y') }}.</span>
                     </div>
@@ -140,7 +140,7 @@
                 <div class="col-lg-5 col-md-12 col-sm-12">
                     <div class="footer-menu">
                         <ul>
-                            <li><a href="#!">Contact us</a></li>
+                            <li><a href="{{ route('contact') }}">Contact us</a></li>
                             <li><a href="#!">About us</a></li>
                             <li><a href="#!">Privacy policy</a></li>
                         </ul>

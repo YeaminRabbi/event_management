@@ -222,7 +222,7 @@
                 <!-- site-logo-wrapper - start -->
                 <div class="col-lg-3">
                     <div class="site-logo-wrapper">
-                        <a href="index-1.html" class="logo">
+                        <a href="{{ route('home') }}" class="logo">
                             <img src="{{ asset(\App\Helpers\Frontend::Settings('website', 'logo')) }}"
                                 alt="logo_not_found">
                         </a>
@@ -247,16 +247,16 @@
                                             <a href="{{ route('about-us') }}">about</a>
                                         </li>
                                         <li class="menu-item-has-children">
-                                            <a href="#!">events</a>
+                                            <a href="{{ route('events') }}">events</a>
                                         </li>
                                         <li class="menu-item-has-children">
-                                            <a href="#!">blogs</a>
+                                            <a href="{{ route('blogs') }}">blogs</a>
                                         </li>
                                         <li>
-                                            <a href="gallery.html">gallery</a>
+                                            <a href="{{ route('home') }}#event-gallery-section">gallery</a>
                                         </li>
                                         <li class="menu-item-has-children">
-                                            <a href="#!">contact</a>
+                                            <a href="{{ route('contact') }}">contact</a>
                                         </li>
                                     </ul>
                                 </div>
