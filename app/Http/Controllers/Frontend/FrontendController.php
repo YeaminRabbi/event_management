@@ -120,4 +120,25 @@ class FrontendController extends Controller
 
         return view('frontendpanel.events.event-list', compact('events', 'eventTypes'));
     }
+
+    public function blogs()
+    {
+        $blogs = Blog::with('image')
+        ->where('status', true)
+        ->latest()
+        ->paginate(6);
+
+        $recent_blogs = Blog::where('status', true)
+        ->latest()
+        ->take(3)
+        ->get();
+
+
+        return view('frontendpanel.blogs.blog-list', compact('blogs', 'recent_blogs'));
+    }
+
+    public function blog_details($blog)
+    {
+
+    }
 }

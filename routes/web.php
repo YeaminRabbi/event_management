@@ -92,6 +92,9 @@ Route::get('/about-us', [\App\Http\Controllers\Frontend\FrontendController::clas
 Route::get('/events', [\App\Http\Controllers\Frontend\FrontendController::class, 'events'])->name('events');
 Route::get('/events/search', [\App\Http\Controllers\Frontend\FrontendController::class, 'search'])->name('events.search');
 Route::get('/events/{event}/details', [\App\Http\Controllers\Frontend\FrontendController::class, 'event_details'])->name('event.details');
+Route::get('/blogs', [\App\Http\Controllers\Frontend\FrontendController::class, 'blogs'])->name('blogs');
+Route::get('/blog/{blog}/details', [\App\Http\Controllers\Frontend\FrontendController::class, 'blog_details'])->name('blog.details');
+
 
 
 

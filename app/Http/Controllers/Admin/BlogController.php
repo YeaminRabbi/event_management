@@ -37,7 +37,7 @@ class BlogController extends Controller
         $request->validate([
             'title' => 'required',
             'category' => 'required',
-            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'description' => 'required',
         ]);
 
@@ -109,7 +109,7 @@ class BlogController extends Controller
         $request->validate([
             'title' => 'required',
             'category' => 'required',
-            'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'description' => 'required',
         ]);
 
