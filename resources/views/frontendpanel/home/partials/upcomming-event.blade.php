@@ -41,7 +41,7 @@
                                         <span class="icon">
                                             <i class="far fa-clock"></i>
                                         </span>
-                                        Start {{ date('h:i A', strtotime($data->start)) }} - {{ date('h:i A', strtotime($data->end)) }}
+                                        Start {{ date('g:i A', strtotime($data->start)) }} - {{ date('g:i A', strtotime($data->end)) }}
                                     </li>
                                     <li>
                                         <span class="icon">
@@ -51,7 +51,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <a href="#" class="custom-btn">
+                            <a href="{{ route('event.details', $data->id) }}" class="custom-btn">
                                 tickets & details
                             </a>
                             {{-- <a href="{{ route('frontend.event.show', $data->slug) }}" class="custom-btn">

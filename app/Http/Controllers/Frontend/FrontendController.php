@@ -85,6 +85,14 @@ class FrontendController extends Controller
         return view('frontendpanel.events.event-list', compact('events', 'eventTypes'));
     }
 
+    public function event_details($event)
+    {
+        $eventTypes = ['conference', 'play-ground', 'musical', 'other'];
+        // return
+        $event = Event::with('image')->findOrFail($event);
+        return view('frontendpanel.events.event-details', compact('event', 'eventTypes'));
+    }
+
     public function search(Request $request)
     {
         $query = Event::with('image')

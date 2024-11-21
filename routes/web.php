@@ -91,7 +91,7 @@ Route::get('/events/paginate', [\App\Http\Controllers\Frontend\FrontendControlle
 Route::get('/about-us', [\App\Http\Controllers\Frontend\FrontendController::class, 'aboutUs'])->name('about-us');
 Route::get('/events', [\App\Http\Controllers\Frontend\FrontendController::class, 'events'])->name('events');
 Route::get('/events/search', [\App\Http\Controllers\Frontend\FrontendController::class, 'search'])->name('events.search');
-Route::get('/events/{event}', [\App\Http\Controllers\Frontend\FrontendController::class, 'show'])->name('events.show');
+Route::get('/events/{event}/details', [\App\Http\Controllers\Frontend\FrontendController::class, 'event_details'])->name('event.details');
 
 
 

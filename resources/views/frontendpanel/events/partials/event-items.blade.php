@@ -18,7 +18,7 @@
                     <ul>
                         <li>
                             <span class="icon"><i class="far fa-clock"></i></span>
-                            Start {{ date('h:i A', strtotime($event->start)) }} - {{ date('h:i A', strtotime($event->end)) }}
+                            Start {{ date('g:i A', strtotime($event->start)) }} - {{ date('g:i A', strtotime($event->end)) }}
                         </li>
                         <li>
                             <span class="icon"><i class="fas fa-map-marker-alt"></i></span>
@@ -26,7 +26,7 @@
                         </li>
                     </ul>
                 </div>
-                <a href="#" class="tickets-details-btn">tickets & details</a>
+                <a href="{{ route('event.details', $event->id) }}" class="tickets-details-btn">tickets & details</a>
             </div>
         </div>
     </div>
