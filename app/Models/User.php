@@ -54,6 +54,6 @@ class User extends Authenticatable
 
     public function integration()
     {
-        return $this->hasOne(integration::class);
+        return $this->hasOne(Integration::class);
     }
 }
